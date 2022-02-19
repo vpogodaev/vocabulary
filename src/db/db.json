@@ -1,0 +1,29 @@
+{
+  "words": [
+    {
+      "id": 1,
+      "firstLanguageValue": "тест 1",
+      "secondLanguageValue": "test 1"
+    },
+    {
+      "id": 2,
+      "firstLanguageValue": "тест 2",
+      "secondLanguageValue": "test 2"
+    },
+    {
+      "id": 3,
+      "firstLanguageValue": "тест 3",
+      "secondLanguageValue": "test 3"
+    },
+    {
+      "id": 4,
+      "firstLanguageValue": "adw",
+      "secondLanguageValue": "as"
+    },
+    {
+      "id": 5,
+      "firstLanguageValue": "addd",
+      "secondLanguageValue": "w12"
+    }
+  ]
+}
