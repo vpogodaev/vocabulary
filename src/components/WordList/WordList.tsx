@@ -1,4 +1,7 @@
 import React from 'react';
+import { Box, List } from '@mui/material';
+
+import Word from './Word/Word';
 
 import { IWord } from '../App/App';
 
@@ -9,25 +12,15 @@ declare type TWordListProps = {
 };
 
 const WordList: React.FC<TWordListProps> = ({words}): JSX.Element => {
-  return (
-    <div>
-      <ul>
-        {words.map(w => <Word key={w.id}
-                              word={w} />)}
-      </ul>
-    </div>
-  );
-};
+  const wordElements = words.map(w => <Word key={w.id}
+                                             word={w} />);
 
-declare type TWordProps = {
-  word: IWord;
-};
-const Word: React.FC<TWordProps> = ({word}): JSX.Element => {
   return (
-    <div>
-      <div>First Language: <span>{word.firstLanguageValue}</span></div>
-      <div>Second Language: <span>{word.secondLanguageValue}</span></div>
-    </div>
+    <Box>
+      <List>
+        {wordElements}
+      </List>
+    </Box>
   );
 };
 

@@ -1,46 +1,54 @@
-import React, { FormEvent, FormEventHandler, useState } from 'react';
+import { Box, TextField } from '@mui/material';
+import React, { FormEvent, useState } from 'react';
+
 import styles from './WordForm.module.scss';
+import Form from '../Form/Form';
 
 declare type TWordFormProps = {
   onFormSubmit: (flv: string, slv: string) => void;
 };
 
 const WordForm: React.FC<TWordFormProps> = ({onFormSubmit}): JSX.Element => {
-  const [firstLanguageValue, setFirstLanguageValue] = useState('');
-  const [secondLanguageValue, setSecondLanguageValue] = useState('');
+  const [opened, setOpened] = useState(false);
 
-  const handleSubmitForm = (e: FormEvent) => {
-    e.preventDefault();
-
-    onFormSubmit(firstLanguageValue, secondLanguageValue);
-
-    setFirstLanguageValue('');
-    setSecondLanguageValue('');
+  const handleOpen = () => {
+    setOpened(true);
   };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
-    set(e.target.value);
+  const handleClose = () => {
+    setOpened(false);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmitForm}>
-        <label>
-          <span>Слово:</span>
-          <input type="text"
-                 value={firstLanguageValue}
-                 onChange={e => onChange(e, setFirstLanguageValue)} />
-        </label>
-        <label>
-          <span>Перевод:</span>
-          <input type="text"
-                 value={secondLanguageValue}
-                 onChange={e => onChange(e, setSecondLanguageValue)} />
-        </label>
-        <button type="submit">Добавить</button>
-      </form>
+      <button onClick={handleOpen}>open</button>
+      <Form open={opened}
+            onClose={handleClose} />
     </div>
   );
+
+  // const [value1, setValue1] = useState('');
+  // const [value2, setValue2] = useState('');
+  //
+  // const handleSubmitForm = (e: FormEvent) => {
+  //   e.preventDefault();
+  //
+  //   onFormSubmit(value1, value2);
+  //
+  //   setValue1('');
+  //   setValue2('');
+  // };
+  //
+  // const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
+  //   set(e.target.value);
+  // };
+  //
+  // return (
+  //   <Box component="form" onSubmit={handleSubmitForm}>
+  //     <TextField required label="Word" onChange={e => handleTextFieldChange(e, setValue1)}/>
+  //     <TextField required label="Translation" onChange={e => handleTextFieldChange(e, setValue2)}/>
+  //     <button type="submit">Добавить</button>
+  //   </Box>
+  // );
 };
 
 export default WordForm;
