@@ -1,0 +1,12 @@
+.inputsWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  // should be not gap, but place for error
+  gap: 22px;
+}
+
+.longInput {
+  //width: 100%;
+}

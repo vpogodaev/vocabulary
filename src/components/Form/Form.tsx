@@ -1,13 +1,26 @@
 import React, { FormEvent, useState } from 'react';
-import { Box, Button, Dialog, DialogActions, DialogContent, IconButton, Slide, TextField, Toolbar, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  IconButton,
+  Slide,
+  TextField,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import CloseIcon from '@mui/icons-material/Close';
 
 import styles from './Form.module.scss';
+import { INewWord } from '../../models/interfaces/IWord';
 
 declare type TFormProps = {
   open: boolean;
   onClose: () => void;
+  onSubmit: (newWord: INewWord) => void;
 };
 
 const Transition = React.forwardRef(function Transition(
@@ -17,22 +30,29 @@ const Transition = React.forwardRef(function Transition(
   ref: React.Ref<unknown>,
 ) {
   return <Slide direction="up"
-                ref={ref} {...props} />;
+                ref={ref}
+                mountOnEnter
+                unmountOnExit
+                {...props} />;
 });
 
-const Form: React.FC<TFormProps> = ({open, onClose}): JSX.Element => {
+const Form: React.FC<TFormProps> = ({open, onClose, onSubmit}): JSX.Element => {
   const [value1, setValue1] = useState('');
   const [value2, setValue2] = useState('');
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
-    // onFormSubmit(value1, value2);
+    onSubmit({value1, value2});
 
     setValue1('');
     setValue2('');
 
-    console.log(value1, value2);
+    onClose();
+  };
+
+  const handleCancelClicked = () => {
+    onClose();
   };
 
   const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
@@ -60,25 +80,31 @@ const Form: React.FC<TFormProps> = ({open, onClose}): JSX.Element => {
 
         <DialogContent>
           <Box component="form"
-               onSubmit={handleSubmitForm}>
-            <Box sx={{display: 'flex'}}>
+               onSubmit={handleSubmitForm}
+               id="wordInputForm">
+            <Box className={styles.inputsWrapper}>
               <TextField required
                          label="Word"
+                         className={styles.longInput}
+                         value={value1}
                          onChange={e => handleTextFieldChange(e, setValue1)} />
               <TextField required
                          label="Translation"
+                         className={styles.longInput}
+                         value={value2}
                          onChange={e => handleTextFieldChange(e, setValue2)} />
             </Box>
-            <DialogActions>
-              <Button onClick={() => console.log('Cancel clicked')}>
-                Cancel
-              </Button>
-              <Button onClick={() => console.log('Submit clicked')}>
-                Submit
-              </Button>
-            </DialogActions>
           </Box>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelClicked}>
+            Cancel
+          </Button>
+          <Button type="submit"
+                  form="wordInputForm">
+            Submit
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

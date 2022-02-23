@@ -1,4 +1,4 @@
-import { IWord } from '../components/App/App';
+import { IWord } from '../models/interfaces/IWord';
 
 const origin = 'http://localhost:3000';
 const route = 'words';

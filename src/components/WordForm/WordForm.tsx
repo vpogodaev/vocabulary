@@ -1,11 +1,13 @@
-import { Box, TextField } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
 
-import styles from './WordForm.module.scss';
+import { INewWord } from '../../models/interfaces/IWord';
+
 import Form from '../Form/Form';
 
+import styles from './WordForm.module.scss';
+
 declare type TWordFormProps = {
-  onFormSubmit: (flv: string, slv: string) => void;
+  onFormSubmit: (word: INewWord) => void;
 };
 
 const WordForm: React.FC<TWordFormProps> = ({onFormSubmit}): JSX.Element => {
@@ -22,33 +24,10 @@ const WordForm: React.FC<TWordFormProps> = ({onFormSubmit}): JSX.Element => {
     <div>
       <button onClick={handleOpen}>open</button>
       <Form open={opened}
-            onClose={handleClose} />
+            onClose={handleClose}
+            onSubmit={onFormSubmit} />
     </div>
   );
-
-  // const [value1, setValue1] = useState('');
-  // const [value2, setValue2] = useState('');
-  //
-  // const handleSubmitForm = (e: FormEvent) => {
-  //   e.preventDefault();
-  //
-  //   onFormSubmit(value1, value2);
-  //
-  //   setValue1('');
-  //   setValue2('');
-  // };
-  //
-  // const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
-  //   set(e.target.value);
-  // };
-  //
-  // return (
-  //   <Box component="form" onSubmit={handleSubmitForm}>
-  //     <TextField required label="Word" onChange={e => handleTextFieldChange(e, setValue1)}/>
-  //     <TextField required label="Translation" onChange={e => handleTextFieldChange(e, setValue2)}/>
-  //     <button type="submit">Добавить</button>
-  //   </Box>
-  // );
 };
 
 export default WordForm;

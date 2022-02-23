@@ -3,7 +3,7 @@ import { Box, List } from '@mui/material';
 
 import Word from './Word/Word';
 
-import { IWord } from '../App/App';
+import { IWord } from '../../models/interfaces/IWord';
 
 import styles from './WordList.module.scss';
 
@@ -13,8 +13,7 @@ declare type TWordListProps = {
 
 const WordList: React.FC<TWordListProps> = ({words}): JSX.Element => {
   const wordElements = words.map(w => <Word key={w.id}
-                                             word={w} />);
-
+                                            word={w} />);
   return (
     <Box>
       <List>
