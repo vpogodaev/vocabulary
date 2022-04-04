@@ -1,11 +1,11 @@
-import { IWord } from '../models/interfaces/IWord';
+import { IWord } from '../models/interfaces/interfaces';
+import { ORIGIN } from './constants';
 
-const origin = 'http://localhost:3000';
 const route = 'words';
 
 export const getWords = (): Promise<any> => {
   try {
-    return fetch(`${origin}/${route}`).then(response => {
+    return fetch(`${ORIGIN}/${route}`).then(response => {
       if (!response.ok) {
         throw new Error();
       }
@@ -26,7 +26,7 @@ export const postWord = (word: IWord): Promise<any> => {
       body: JSON.stringify(word),
       headers: {'Content-Type': 'application/json'},
     };
-    return fetch(`${origin}/${route}`, params);
+    return fetch(`${ORIGIN}/${route}`, params);
   } catch (e: any) {
     console.error(e.message);
     throw e;

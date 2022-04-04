@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import CloseIcon from '@mui/icons-material/Close';
+import { INewWord } from '../../models/interfaces/interfaces';
 
 import styles from './Form.module.scss';
-import { INewWord } from '../../models/interfaces/IWord';
 
 declare type TFormProps = {
   open: boolean;

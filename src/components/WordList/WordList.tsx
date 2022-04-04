@@ -3,7 +3,7 @@ import { Box, List } from '@mui/material';
 
 import Word from './Word/Word';
 
-import { IWord } from '../../models/interfaces/IWord';
+import { IWord } from '../../models/interfaces/interfaces';
 
 import styles from './WordList.module.scss';
 

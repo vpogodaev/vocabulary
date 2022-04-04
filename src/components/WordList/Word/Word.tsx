@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 
-import { IWord } from '../../../models/interfaces/IWord';
+import { IWord } from '../../../models/interfaces/interfaces';
 
 import styles from './Word.module.scss';
 

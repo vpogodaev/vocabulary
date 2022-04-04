@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Box, Container, CssBaseline, styled, Toolbar, Typography } from '@mui/material';
 
-import MainPage from '../../pages/MainPage/MainPage';
+import { MainPage } from '../../pages/MainPage/MainPage';
 
 import styles from './App.module.scss';
 

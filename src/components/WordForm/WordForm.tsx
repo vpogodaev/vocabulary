@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 
-import { INewWord } from '../../models/interfaces/IWord';
+import { INewWord } from '../../models/interfaces/interfaces';
 
 import Form from '../Form/Form';
 
