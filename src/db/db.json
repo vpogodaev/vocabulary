@@ -1,4 +1,47 @@
 {
+  "dictionaries": [
+    {
+      "name": "w",
+      "description": "",
+      "lang1": "s",
+      "lang2": "d",
+      "id": 1
+    },
+    {
+      "name": "s",
+      "description": "a",
+      "lang1": "d",
+      "lang2": "w",
+      "id": 2
+    },
+    {
+      "name": "s",
+      "lang1": "w",
+      "lang2": "a",
+      "id": 3
+    },
+    {
+      "name": "d",
+      "description": "wd",
+      "lang1": "s",
+      "lang2": "a",
+      "id": 4
+    },
+    {
+      "name": "w",
+      "description": "sad",
+      "lang1": "a",
+      "lang2": "s",
+      "id": 5
+    },
+    {
+      "name": "we",
+      "description": "wa",
+      "lang1": "ad",
+      "lang2": "f",
+      "id": 6
+    }
+  ],
   "words": [
     {
       "id": 1,
@@ -24,6 +67,16 @@
       "id": 5,
       "value1": "addd",
       "value2": "w12"
+    },
+    {
+      "id": 6,
+      "value1": "かさ",
+      "value2": "Зонт"
+    },
+    {
+      "id": 7,
+      "value1": "1",
+      "value2": "1"
     }
   ]
 }

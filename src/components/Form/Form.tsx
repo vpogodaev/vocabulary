@@ -77,7 +77,6 @@ const Form: React.FC<TFormProps> = ({open, onClose, onSubmit}): JSX.Element => {
             Some text
           </Typography>
         </Toolbar>
-
         <DialogContent>
           <Box component="form"
                onSubmit={handleSubmitForm}

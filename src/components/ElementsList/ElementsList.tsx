@@ -1,16 +1,22 @@
 import React from 'react';
-import { Element, TElementProps } from './Element';
-import { Box, List } from '@mui/material';
+import { Element } from './Element';
+import { Box, List, SxProps, Theme } from '@mui/material';
+import { TElementPropsWithId } from './elementProps';
 
 type TElementsListProps = {
-  elements: TElementProps[];
+  boxSx?: SxProps<Theme>;
+  elements: TElementPropsWithId[];
 };
 
-export const ElementsList: React.FC<TElementsListProps> = ({elements}): JSX.Element => {
-  const list = elements.map(e => <Element {...e} />);
+const defaultBoxSx = {
+  height: '100vh',
+};
+
+export const ElementsList: React.FC<TElementsListProps> = ({boxSx = defaultBoxSx, elements}): JSX.Element => {
+  const list = elements.map(e => <Element key={e.id} {...e} />);
 
   return (
-    <Box>
+    <Box sx={boxSx}>
       <List>
         {list}
       </List>

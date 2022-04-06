@@ -1,10 +1,6 @@
 import React from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
-
-type TElementProps = {
-  primaryText: string;
-  secondaryText: string;
-};
+import { TElementProps } from './elementProps';
 
 export const Element: React.FC<TElementProps> = ({primaryText, secondaryText}): JSX.Element => {
   return (
