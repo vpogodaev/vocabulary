@@ -10,6 +10,8 @@ import { getWords, postWord } from '../../services/wordsService';
 
 import styles from './Words.module.scss';
 import { AddFAB } from '../../components/AddFAB/AddFAB';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchWords } from '../../store/wordsSlice';
 
 type TWordsPageProps = {};
 
@@ -19,15 +21,20 @@ const initWords: IWord[] = [
 ];
 
 export const WordsPage: React.FC<TWordsPageProps> = ({}): JSX.Element => {
-  const [words, setWords] = useState(initWords);
+  const dispatch = useAppDispatch();
+
+  const words = useAppSelector(state => state.words.words);
+
+  // const [words, setWords] = useState(initWords);
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
-  const loadWords = () => {
-    getWords().then(data => {
-      if (data) {
-        setWords(data);
-      }
-    });
+  const loadWords = async () => {
+    await dispatch(fetchWords);
+    // getWords().then(data => {
+    //   if (data) {
+    //     setWords(data);
+    //   }
+    // });
   };
 
   useEffect(() => {
