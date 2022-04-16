@@ -1,5 +1,5 @@
 import React from 'react';
-import { DictionariesPage } from '../DictionariesPage/DictionariesPage';
+import { DictionariesPage } from '../Dictionaries/DictionariesPage/DictionariesPage';
 import { WordsPage } from '../WordsPage/WordsPage';
 
 // This page for all testing now

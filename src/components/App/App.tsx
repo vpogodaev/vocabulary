@@ -25,7 +25,7 @@ function App() {
         <Offset />
       </Box>
 
-      <Container maxWidth="sm">
+      <Container maxWidth="sm" sx={{height: '100%'}}>
         <MainPage />
       </Container>
     </div>

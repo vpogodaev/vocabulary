@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from 'react';
-import { SliderDialog } from '../../../components/SliderDialog/SliderDialog';
+import { SliderDialog } from '../../../../components/SliderDialog/SliderDialog';
 import { Box, Button, DialogActions, DialogContent, IconButton, TextField, Toolbar, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { INewDictionary } from '../../../models/Dictionary/IDictionary';
+import { INewDictionary } from '../../../../models/Dictionary/IDictionary';
 
 type TNewDictionaryFormProps = {
   isOpened: boolean;

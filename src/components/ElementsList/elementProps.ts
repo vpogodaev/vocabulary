@@ -3,7 +3,10 @@ interface IElementPropsBase {
   secondaryText?: string;
 }
 
-export type TElementProps = IElementPropsBase
+//TODO: make generic?
+export type TElementProps = {
+  onClick?: () => void;
+} & IElementPropsBase
 
 export type TElementPropsWithId = {
   id: string;

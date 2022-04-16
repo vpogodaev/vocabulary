@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { getDictionaries, postDictionary } from '../../services/dictionariesService';
-import { AddFAB } from '../../components/AddFAB/AddFAB';
-import Form from '../../components/Form/Form';
-import { ElementsList } from '../../components/ElementsList/ElementsList';
-import { IDictionary, INewDictionary } from '../../models/Dictionary/IDictionary';
+import { getDictionaries, postDictionary } from '../../../services/dictionariesService';
+import { AddFAB } from '../../../components/AddFAB/AddFAB';
+import Form from '../../../components/Form/Form';
+import { ElementsList } from '../../../components/ElementsList/ElementsList';
+import { IDictionary, INewDictionary } from '../../../models/Dictionary/IDictionary';
 import { Box } from '@mui/material';
 import { NewDictionaryForm } from './components/NewDictionaryForm';
+import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
 
 type TDictionariesPageProps = {};
 
@@ -46,7 +47,7 @@ export const DictionariesPage: React.FC<TDictionariesPageProps> = ({}): JSX.Elem
     setIsAddFormOpened(() => false);
   };
 
-  const getDictionariesToRender = useMemo(() => dictionaries.map((d) => (
+  const getDictionariesToRender = useMemo<TElementPropsWithId[]>(() => dictionaries.map((d) => (
     {
       primaryText: d.name,
       secondaryText: d.description,
@@ -54,12 +55,16 @@ export const DictionariesPage: React.FC<TDictionariesPageProps> = ({}): JSX.Elem
     }
   )), [dictionaries]);
 
+  const handleElementClick = (element: TElementPropsWithId) => {
+    console.log(element);
+  }
+
   const content = dictionaries.length
-    ? <ElementsList elements={getDictionariesToRender} />
+    ? <ElementsList elements={getDictionariesToRender} onElementClick={handleElementClick} />
     : <NoDictionaries />;
 
   return (
-    <Box>
+    <Box sx={{height: '100%'}}>
       {content}
       <AddFAB color="primary"
               onClick={handleNewDictionaryClicked} />

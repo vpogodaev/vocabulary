@@ -2,12 +2,13 @@ import React from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { TElementProps } from './elementProps';
 
-export const Element: React.FC<TElementProps> = ({primaryText, secondaryText}): JSX.Element => {
+export const Element: React.FC<TElementProps> = ({primaryText, secondaryText, onClick}): JSX.Element => {
   return (
     <ListItem disablePadding>
       <ListItemButton>
         <ListItemText primary={primaryText}
-                      secondary={secondaryText} />
+                      secondary={secondaryText}
+                      onClick={onClick} />
       </ListItemButton>
     </ListItem>
   );
