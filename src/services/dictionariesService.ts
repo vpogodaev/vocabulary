@@ -1,39 +1,18 @@
 import { ORIGIN } from './constants';
-import { INewDictionary } from '../models/Dictionary/IDictionary';
+import { IDictionary, INewDictionary } from '../models/Dictionary/IDictionary';
+import { httpFetch, Methods } from './http';
 
 const route = 'dictionaries';
 
-export const getDictionaries = (): Promise<any> => {
-  try {
-    const url = `${ORIGIN}/${route}`;
-
-    return fetch(url)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error();
-        }
-
-        return response.json();
-      });
-  } catch (e: any) {
-    console.error(e.message);
-    throw e;
-  }
+const getDictionaries = (): Promise<IDictionary[]> => {
+  return httpFetch<IDictionary[]>(`${ORIGIN}/${route}`);
 };
 
-export const postDictionary = (dictionary: INewDictionary) => {
-  try {
-    const url = `${ORIGIN}/${route}`;
+const postDictionary = (dictionary: INewDictionary) => {
+  return httpFetch<IDictionary>(`${ORIGIN}/${route}`, Methods.POST, dictionary);
+};
 
-    const params = {
-      method: 'POST',
-      body: JSON.stringify(dictionary),
-      headers: {'Content-type': 'application/json'},
-    };
-
-    return fetch(url, params);
-  } catch (e: any) {
-    console.error(e.message);
-    throw e;
-  }
+export const DictionariesAPI = {
+  getDictionaries,
+  postDictionary,
 };

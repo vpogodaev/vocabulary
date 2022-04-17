@@ -1,33 +1,26 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IWord } from '../models/interfaces/interfaces';
 import { ORIGIN } from '../services/constants';
+import { httpFetch } from '../services/http';
+import { StateStatuses } from './types';
 
 const name = 'words';
 const route = 'words';
 
-enum Statuses {
-  IDLE = 'IDLE',
-  LOADING = 'LOADING',
-  ERROR = 'ERROR'
-}
-
 type IWordsState = {
-  status: Statuses,
+  status: StateStatuses,
   words: IWord[],
 }
 
 const initialState: IWordsState = {
-  status: Statuses.IDLE,
+  status: StateStatuses.IDLE,
   words: [],
 };
 
 export const fetchWords = createAsyncThunk(
-  `${name}/fetchWords`,
+  `words/fetchWords`,
   async () => {
-    const response = await fetch(`${ORIGIN}/${route}`);
-    return (
-      await response.json()
-    ) as IWord[];
+    return await httpFetch<IWord[]>(`${ORIGIN}/${route}`) as IWord[];
   },
 );
 
@@ -38,14 +31,14 @@ export const wordsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchWords.pending, (state) => {
-        state.status = Statuses.LOADING;
+        state.status = StateStatuses.LOADING;
       })
       .addCase(fetchWords.fulfilled, (state, action) => {
-        state.status = Statuses.IDLE;
+        state.status = StateStatuses.IDLE;
         state.words = action.payload;
       })
-      .addCase(fetchWords.rejected, (state) => {
-        state.status = Statuses.ERROR;
+      .addCase(fetchWords.rejected, (state, action) => {
+        state.status = StateStatuses.ERROR;
       })
       .addDefaultCase(() => {
       });

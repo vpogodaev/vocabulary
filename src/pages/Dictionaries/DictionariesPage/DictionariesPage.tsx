@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { getDictionaries, postDictionary } from '../../../services/dictionariesService';
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import Form from '../../../components/Form/Form';
 import { ElementsList } from '../../../components/ElementsList/ElementsList';
@@ -7,36 +6,24 @@ import { IDictionary, INewDictionary } from '../../../models/Dictionary/IDiction
 import { Box } from '@mui/material';
 import { NewDictionaryForm } from './components/NewDictionaryForm';
 import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { fetchDictionaries, postDictionary } from '../../../store/dictionariesSlice';
 
 type TDictionariesPageProps = {};
 
 export const DictionariesPage: React.FC<TDictionariesPageProps> = ({}): JSX.Element => {
-  const [dictionaries, setDictionaries] = useState<IDictionary[]>([]);
+  const dispatch = useAppDispatch();
+
+  const dictionaries = useAppSelector(state => state.dictionaries.dictionaries);
+
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
-  const loadDictionaries = () => {
-    getDictionaries()
-      .then(data => {
-        if (data) {
-          setDictionaries(data);
-        }
-      });
-  };
-
   useEffect(() => {
-    loadDictionaries();
+    dispatch(fetchDictionaries());
   }, []);
 
   const handleFormSubmit = (dictionary: INewDictionary) => {
-    console.log(dictionary);
-    postDictionary(dictionary).then(r => {
-      if (r.ok) {
-        return r.json();
-      }
-    }).then(r => {
-      console.log(r);
-      setDictionaries((d) => ([...d, r]));
-    });
+    dispatch(postDictionary(dictionary));
   };
 
   const handleNewDictionaryClicked = () => {

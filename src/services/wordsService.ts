@@ -24,11 +24,16 @@ export const postWord = (word: IWord): Promise<any> => {
     const params = {
       method: 'POST',
       body: JSON.stringify(word),
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
     };
     return fetch(`${ORIGIN}/${route}`, params);
   } catch (e: any) {
     console.error(e.message);
     throw e;
   }
+};
+
+export const WordsAPI = {
+  getWords,
+  postWord,
 };
