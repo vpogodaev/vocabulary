@@ -23,27 +23,31 @@ declare type TFormProps = {
   onSubmit: (newWord: INewWord) => void;
 };
 
-const Transition = React.forwardRef(function Transition(
+const Transition = React.forwardRef((
   props: TransitionProps & {
     children: React.ReactElement;
   },
   ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up"
-                ref={ref}
-                mountOnEnter
-                unmountOnExit
-                {...props} />;
-});
+) => (
+  <Slide
+    direction="up"
+    ref={ref}
+    mountOnEnter
+    unmountOnExit
+    {...props}
+  >
+    {props.children}
+  </Slide>
+));
 
-const Form: React.FC<TFormProps> = ({open, onClose, onSubmit}): JSX.Element => {
+const Form: React.FC<TFormProps> = ({ open, onClose, onSubmit }) => {
   const [value1, setValue1] = useState('');
   const [value2, setValue2] = useState('');
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
-    onSubmit({value1, value2});
+    onSubmit({ value1, value2 });
 
     setValue1('');
     setValue2('');
@@ -55,43 +59,58 @@ const Form: React.FC<TFormProps> = ({open, onClose, onSubmit}): JSX.Element => {
     onClose();
   };
 
-  const handleTextFieldChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, set: React.Dispatch<React.SetStateAction<string>>) => {
+  const handleTextFieldChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    set: React.Dispatch<React.SetStateAction<string>>,
+  ) => {
     set(e.target.value);
   };
 
   return (
     <div>
-      <Dialog fullScreen
-              open={open}
-              TransitionComponent={Transition}>
-        <Toolbar sx={{position: 'relative'}}>
-          <IconButton edge="start"
-                      color="inherit"
-                      aria-label="close"
-                      onClick={onClose}>
+      <Dialog
+        fullScreen
+        open={open}
+        TransitionComponent={Transition}
+      >
+        <Toolbar sx={{ position: 'relative' }}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="close"
+            onClick={onClose}
+          >
             <CloseIcon />
           </IconButton>
-          <Typography sx={{ml: 2, flex: 1}}
-                      variant="h6"
-                      component="div">
+          <Typography
+            sx={{ ml: 2, flex: 1 }}
+            variant="h6"
+            component="div"
+          >
             Some text
           </Typography>
         </Toolbar>
         <DialogContent>
-          <Box component="form"
-               onSubmit={handleSubmitForm}
-               id="wordInputForm">
+          <Box
+            component="form"
+            onSubmit={handleSubmitForm}
+            id="wordInputForm"
+          >
             <Box className={styles.inputsWrapper}>
-              <TextField required
-                         label="Word"
-                         className={styles.longInput}
-                         value={value1}
-                         onChange={e => handleTextFieldChange(e, setValue1)} />
-              <TextField required
-                         label="Translation"
-                         className={styles.longInput}
-                         value={value2}
-                         onChange={e => handleTextFieldChange(e, setValue2)} />
+              <TextField
+                required
+                label="Word"
+                className={styles.longInput}
+                value={value1}
+                onChange={(e) => handleTextFieldChange(e, setValue1)}
+              />
+              <TextField
+                required
+                label="Translation"
+                className={styles.longInput}
+                value={value2}
+                onChange={(e) => handleTextFieldChange(e, setValue2)}
+              />
             </Box>
           </Box>
         </DialogContent>
@@ -99,8 +118,10 @@ const Form: React.FC<TFormProps> = ({open, onClose, onSubmit}): JSX.Element => {
           <Button onClick={handleCancelClicked}>
             Cancel
           </Button>
-          <Button type="submit"
-                  form="wordInputForm">
+          <Button
+            type="submit"
+            form="wordInputForm"
+          >
             Submit
           </Button>
         </DialogActions>

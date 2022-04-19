@@ -6,8 +6,6 @@ import { WordsPage } from '../WordsPage/WordsPage';
 
 type TMainPageProps = {};
 
-export const MainPage: React.FC<TMainPageProps> = ({}): JSX.Element => {
-  // return <WordsPage />
-  return <DictionariesPage />;
-};
-
+export const MainPage: React.FC<TMainPageProps> = ({}): JSX.Element =>
+// return <WordsPage />
+  <DictionariesPage />;

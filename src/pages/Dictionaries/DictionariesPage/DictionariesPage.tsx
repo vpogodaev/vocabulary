@@ -1,20 +1,37 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
+import {
+  AppBar, Box, makeStyles, styled, Toolbar, Typography,
+} from '@mui/material';
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import Form from '../../../components/Form/Form';
 import { ElementsList } from '../../../components/ElementsList/ElementsList';
 import { IDictionary, INewDictionary } from '../../../models/Dictionary/IDictionary';
-import { Box } from '@mui/material';
 import { NewDictionaryForm } from './components/NewDictionaryForm';
 import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { fetchDictionaries, postDictionary } from '../../../store/dictionariesSlice';
+import { useHeight } from '../../../components/AddFAB/useHeight';
 
 type TDictionariesPageProps = {};
 
-export const DictionariesPage: React.FC<TDictionariesPageProps> = ({}): JSX.Element => {
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+const NoDictionaries = () => (
+  <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
+    <span>
+      No dictionaries found!
+    </span>
+  </Box>
+);
+
+export const DictionariesPage: React.FC<TDictionariesPageProps> = () => {
   const dispatch = useAppDispatch();
 
-  const dictionaries = useAppSelector(state => state.dictionaries.dictionaries);
+  const { ref: fabRef, height: fabHeight } = useHeight();
+
+  const dictionaries = useAppSelector((state) => state.dictionaries.dictionaries);
 
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
@@ -44,28 +61,47 @@ export const DictionariesPage: React.FC<TDictionariesPageProps> = ({}): JSX.Elem
 
   const handleElementClick = (element: TElementPropsWithId) => {
     console.log(element);
-  }
+  };
 
   const content = dictionaries.length
-    ? <ElementsList elements={getDictionariesToRender} onElementClick={handleElementClick} />
+    ? (
+      <ElementsList
+        elements={getDictionariesToRender}
+        onElementClick={handleElementClick}
+      />
+    )
     : <NoDictionaries />;
 
   return (
-    <Box sx={{height: '100%'}}>
-      {content}
-      <AddFAB color="primary"
-              onClick={handleNewDictionaryClicked} />
-      <NewDictionaryForm isOpened={isAddFormOpened}
-                         onClose={handleFormClosed}
-                         onSubmit={handleFormSubmit} />
+    <Box sx={{ display: 'flex', flexDirection: 'column' /* height: '100%' */ }}>
+      <Box>
+        <AppBar position="fixed">
+          <Toolbar>
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{ flexGrow: 1 }}
+            >
+              Words
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Offset />
+      </Box>
+      <Box sx={{}}>
+        {/* <Box sx={{ height: `100%` }}> */}
+        {content}
+        <AddFAB
+          color="primary"
+          onClick={handleNewDictionaryClicked}
+          ref={fabRef}
+        />
+        <NewDictionaryForm
+          isOpened={isAddFormOpened}
+          onClose={handleFormClosed}
+          onSubmit={handleFormSubmit}
+        />
+      </Box>
     </Box>
   );
 };
-
-const NoDictionaries: React.FC = (): JSX.Element => (
-  <Box sx={{height: '100vh', pt: '40%', textAlign: 'center'}}>
-    <span>
-      No dictionaries found!
-    </span>
-  </Box>
-);

@@ -10,7 +10,7 @@
 // }
 
 interface IWordBase {
-  //TODO: tmp
+  // TODO: tmp
   value1: string;
   value2: string;
 }

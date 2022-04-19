@@ -1,6 +1,6 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { StateStatuses } from './types';
 import { IDictionary, INewDictionary } from '../models/Dictionary/IDictionary';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DictionariesAPI } from '../services/dictionariesService';
 
 const name = 'dictionaries';
@@ -17,16 +17,12 @@ const initialState: TDictionariesState = {
 
 export const fetchDictionaries = createAsyncThunk(
   `${name}/fetchDictionaries`,
-  async () => {
-    return await DictionariesAPI.getDictionaries();
-  },
+  async () => await DictionariesAPI.getDictionaries(),
 );
 
 export const postDictionary = createAsyncThunk(
   `${name}/postDictionaries`,
-  async (dictionary: INewDictionary) => {
-    return await DictionariesAPI.postDictionary(dictionary);
-  },
+  async (dictionary: INewDictionary) => await DictionariesAPI.postDictionary(dictionary),
 );
 
 export const dictionariesSlice = createSlice({

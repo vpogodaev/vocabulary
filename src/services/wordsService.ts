@@ -5,7 +5,7 @@ const route = 'words';
 
 export const getWords = (): Promise<any> => {
   try {
-    return fetch(`${ORIGIN}/${route}`).then(response => {
+    return fetch(`${ORIGIN}/${route}`).then((response) => {
       if (!response.ok) {
         throw new Error();
       }

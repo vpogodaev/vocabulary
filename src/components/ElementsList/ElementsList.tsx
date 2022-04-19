@@ -1,6 +1,8 @@
 import React from 'react';
+import {
+  Box, List, SxProps, Theme,
+} from '@mui/material';
 import { Element } from './Element';
-import { Box, List, SxProps, Theme } from '@mui/material';
 import { TElementPropsWithId } from './elementProps';
 
 type TElementsListProps = {
@@ -18,7 +20,8 @@ export const ElementsList: React.FC<TElementsListProps> = (
     boxSx = defaultBoxSx,
     elements,
     onElementClick,
-  }): JSX.Element => {
+  },
+) => {
   const handleElementClick = (element: any) => {
     if (!onElementClick) {
       return;
@@ -26,9 +29,13 @@ export const ElementsList: React.FC<TElementsListProps> = (
     onElementClick(element);
   };
 
-  const list = elements.map(e => <Element key={e.id}
-                                          onClick={() => handleElementClick(e)}
-                                          {...e} />);
+  const list = elements.map((e) => (
+    <Element
+      key={e.id}
+      onClick={() => handleElementClick(e)}
+      {...e}
+    />
+  ));
 
   return (
     <Box sx={boxSx}>

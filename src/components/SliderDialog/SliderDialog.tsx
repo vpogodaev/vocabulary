@@ -7,28 +7,33 @@ type TSliderDialogProps = {
   children?: React.ReactNode;
 };
 
-const Transition = React.forwardRef(function Transition(
+const Transition = React.forwardRef((
   props: TransitionProps & {
     children: React.ReactElement;
   },
   ref: React.Ref<unknown>,
-) {
-  const {children, ...rest} = props;
+) => {
+  const { children, ...rest } = props;
 
-  return <Slide direction="up"
-                ref={ref}
-                mountOnEnter
-                unmountOnExit
-                children={children}
-                {...rest} />;
+  return (
+    <Slide
+      direction="up"
+      ref={ref}
+      mountOnEnter
+      unmountOnExit
+      {...rest}
+    >
+      {children}
+    </Slide>
+  );
 });
 
-export const SliderDialog: React.FC<TSliderDialogProps> = ({isOpened, children}): JSX.Element => {
-  return (
-    <Dialog fullScreen
-            open={isOpened}
-            TransitionComponent={Transition}>
-      {children}
-    </Dialog>
-  );
-};
+export const SliderDialog: React.FC<TSliderDialogProps> = ({ isOpened, children }) => (
+  <Dialog
+    fullScreen
+    open={isOpened}
+    TransitionComponent={Transition}
+  >
+    {children}
+  </Dialog>
+);

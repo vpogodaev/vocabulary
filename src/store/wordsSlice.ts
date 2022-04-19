@@ -18,10 +18,8 @@ const initialState: IWordsState = {
 };
 
 export const fetchWords = createAsyncThunk(
-  `words/fetchWords`,
-  async () => {
-    return await httpFetch<IWord[]>(`${ORIGIN}/${route}`) as IWord[];
-  },
+  'words/fetchWords',
+  async () => await httpFetch<IWord[]>(`${ORIGIN}/${route}`) as IWord[],
 );
 
 export const wordsSlice = createSlice({

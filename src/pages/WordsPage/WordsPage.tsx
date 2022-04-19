@@ -15,17 +15,27 @@ import { fetchWords } from '../../store/wordsSlice';
 
 type TWordsPageProps = {};
 
-const initWords: IWord[] = [
-  { id: 1, value1: 'тест 1', value2: 'test 1' },
-  { id: 2, value1: 'тест 2', value2: 'test 2' },
-];
+declare type TWordsProps = {
+  words: IWord[];
+  onAddClicked: () => void;
+};
 
-export const WordsPage: React.FC<TWordsPageProps> = ({}): JSX.Element => {
+const Words: React.FC<TWordsProps> = ({ words, onAddClicked }) => (
+  <>
+    <WordList words={words} />
+    <AddFAB
+      color="primary"
+      onClick={onAddClicked}
+    />
+  </>
+);
+
+export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const dispatch = useAppDispatch();
 
-  const words = useAppSelector(state => state.words.words);
+  const words = useAppSelector((state) => state.words.words);
 
-  //const [words, setWords] = useState(initWords);
+  // const [words, setWords] = useState(initWords);
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
   const loadWordsAsync = async () => {
@@ -43,13 +53,13 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}): JSX.Element => {
   const handleFormSubmit = ({ value1, value2 }: INewWord) => {
     const word: IWord = {
       id: Math.max(...(
-        words.map(w => w.id)
+        words.map((w) => w.id)
       )) + 1,
       value1,
       value2,
     };
 
-    postWord(word).then(r => {
+    postWord(word).then((r) => {
       if (r.ok) {
         loadWords();
       }
@@ -66,26 +76,15 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}): JSX.Element => {
 
   return (
     <>
-      <Words words={words}
-             onAddClicked={handleNewWordClicked} />
-      <Form open={isAddFormOpened}
-            onClose={handleFormClosed}
-            onSubmit={handleFormSubmit} />
-    </>
-  );
-};
-
-declare type TWordsProps = {
-  words: IWord[];
-  onAddClicked: () => void;
-};
-
-const Words: React.FC<TWordsProps> = ({ words, onAddClicked }) => {
-  return (
-    <>
-      <WordList words={words} />
-      <AddFAB color="primary"
-              onClick={onAddClicked} />
+      <Words
+        words={words}
+        onAddClicked={handleNewWordClicked}
+      />
+      <Form
+        open={isAddFormOpened}
+        onClose={handleFormClosed}
+        onSubmit={handleFormSubmit}
+      />
     </>
   );
 };

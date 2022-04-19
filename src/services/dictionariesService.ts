@@ -4,13 +4,9 @@ import { httpFetch, Methods } from './http';
 
 const route = 'dictionaries';
 
-const getDictionaries = (): Promise<IDictionary[]> => {
-  return httpFetch<IDictionary[]>(`${ORIGIN}/${route}`);
-};
+const getDictionaries = (): Promise<IDictionary[]> => httpFetch<IDictionary[]>(`${ORIGIN}/${route}`);
 
-const postDictionary = (dictionary: INewDictionary) => {
-  return httpFetch<IDictionary>(`${ORIGIN}/${route}`, Methods.POST, dictionary);
-};
+const postDictionary = (dictionary: INewDictionary) => httpFetch<IDictionary>(`${ORIGIN}/${route}`, dictionary, Methods.POST);
 
 export const DictionariesAPI = {
   getDictionaries,

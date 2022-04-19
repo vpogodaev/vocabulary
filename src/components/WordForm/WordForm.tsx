@@ -10,7 +10,7 @@ declare type TWordFormProps = {
   onFormSubmit: (word: INewWord) => void;
 };
 
-const WordForm: React.FC<TWordFormProps> = ({onFormSubmit}): JSX.Element => {
+const WordForm: React.FC<TWordFormProps> = ({ onFormSubmit }) => {
   const [opened, setOpened] = useState(false);
 
   const handleOpen = () => {
@@ -23,9 +23,11 @@ const WordForm: React.FC<TWordFormProps> = ({onFormSubmit}): JSX.Element => {
   return (
     <div>
       <button onClick={handleOpen}>open</button>
-      <Form open={opened}
-            onClose={handleClose}
-            onSubmit={onFormSubmit} />
+      <Form
+        open={opened}
+        onClose={handleClose}
+        onSubmit={onFormSubmit}
+      />
     </div>
   );
 };

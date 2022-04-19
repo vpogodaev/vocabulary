@@ -11,9 +11,13 @@ declare type TWordListProps = {
   words: IWord[];
 };
 
-const WordList: React.FC<TWordListProps> = ({words}): JSX.Element => {
-  const wordElements = words.map(w => <Word key={w.id}
-                                            word={w} />);
+const WordList: React.FC<TWordListProps> = ({ words }) => {
+  const wordElements = words.map((w) => (
+    <Word
+      key={w.id}
+      word={w}
+    />
+  ));
   return (
     <Box>
       <List>
