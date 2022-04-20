@@ -1,11 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IWord } from '../models/interfaces/interfaces';
-import { ORIGIN } from '../services/constants';
-import { httpFetch } from '../services/http';
+import { IWord } from '../models/Dictionary/IWord';
 import { StateStatuses } from './types';
+import { WordsAPI } from '../services/wordsService';
 
 const name = 'words';
-const route = 'words';
 
 type IWordsState = {
   status: StateStatuses,
@@ -18,8 +16,8 @@ const initialState: IWordsState = {
 };
 
 export const fetchWords = createAsyncThunk(
-  'words/fetchWords',
-  async () => await httpFetch<IWord[]>(`${ORIGIN}/${route}`) as IWord[],
+  `${name}/fetchWords`,
+  async (dictionaryId: number) => await WordsAPI.getWords(dictionaryId),
 );
 
 export const wordsSlice = createSlice({

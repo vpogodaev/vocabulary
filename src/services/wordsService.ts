@@ -1,23 +1,10 @@
-import { IWord } from '../models/interfaces/interfaces';
+import { IWord } from '../models/Dictionary/IWord';
 import { ORIGIN } from './constants';
+import { httpFetch } from './http';
 
 const route = 'words';
 
-export const getWords = (): Promise<any> => {
-  try {
-    return fetch(`${ORIGIN}/${route}`).then((response) => {
-      if (!response.ok) {
-        throw new Error();
-      }
-
-      const data = response.json();
-      return data;
-    });
-  } catch (e: any) {
-    console.error(e.message);
-    throw e;
-  }
-};
+export const getWords = (dictionaryId: number): Promise<IWord[]> => httpFetch<IWord[]>(`${ORIGIN}/${route}?dictionaryId=${dictionaryId}`);
 
 export const postWord = (word: IWord): Promise<any> => {
   try {

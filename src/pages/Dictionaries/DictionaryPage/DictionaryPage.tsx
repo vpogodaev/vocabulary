@@ -4,6 +4,6 @@ type TDictionaryPageProps = {};
 
 export const DictionaryPage: React.FC<TDictionaryPageProps> = ({}) => (
   <div>
-    hello
+    hello dictionary
   </div>
 );

@@ -9,7 +9,8 @@ import { MainPage } from '../../pages/MainPage/MainPage';
 
 import styles from './App.module.scss';
 import { DictionariesPage } from '../../pages/Dictionaries/DictionariesPage/DictionariesPage';
-import { WordsPage } from '../../pages/WordsPage/WordsPage';
+import { WordsPage } from '../../pages/Dictionaries/WordsPage/WordsPage';
+import { DictionaryPage } from '../../pages/Dictionaries/DictionaryPage/DictionaryPage';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -37,14 +38,17 @@ function App() {
         <Routes>
           <Route
             path="/"
+            element={<MainPage />}
+          />
+          <Route
+            path="dictionaries"
             element={<DictionariesPage />}
           />
           <Route
-            path="/words"
+            path="dictionaries/:dictionaryId"
             element={<WordsPage />}
           />
         </Routes>
-        {/* <MainPage /> */}
       </Container>
     </div>
   );

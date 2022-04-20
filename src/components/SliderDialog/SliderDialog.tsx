@@ -1,10 +1,16 @@
 import React from 'react';
-import { Dialog, Slide } from '@mui/material';
+import {
+  Dialog, DialogActions, DialogContent, IconButton, Slide, Toolbar, Typography,
+} from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import CloseIcon from '@mui/icons-material/Close';
 
 type TSliderDialogProps = {
   isOpened: boolean;
-  children?: React.ReactNode;
+  title: string;
+  onCloseClick: () => void;
+  content: React.ReactNode;
+  actions?: React.ReactNode;
 };
 
 const Transition = React.forwardRef((
@@ -28,12 +34,40 @@ const Transition = React.forwardRef((
   );
 });
 
-export const SliderDialog: React.FC<TSliderDialogProps> = ({ isOpened, children }) => (
-  <Dialog
-    fullScreen
-    open={isOpened}
-    TransitionComponent={Transition}
-  >
-    {children}
-  </Dialog>
-);
+export const SliderDialog: React.FC<TSliderDialogProps> = ({
+  isOpened, title, onCloseClick, content, actions,
+}) => {
+  const dialogActions = actions
+    ? <DialogActions>{actions}</DialogActions>
+    : null;
+
+  return (
+    <Dialog
+      fullScreen
+      open={isOpened}
+      TransitionComponent={Transition}
+    >
+      <Toolbar sx={{ position: 'relative' }}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="close"
+          onClick={onCloseClick}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography
+          sx={{ ml: 2, flex: 1 }}
+          variant="h6"
+          component="div"
+        >
+          {title}
+        </Typography>
+      </Toolbar>
+      <DialogContent>
+        {content}
+      </DialogContent>
+      {dialogActions}
+    </Dialog>
+  );
+};
