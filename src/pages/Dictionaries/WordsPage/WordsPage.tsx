@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box } from '@mui/material';
 
-// import Form from '../../../components/Form/Form';
-// import WordList from '../../../components/WordList/WordList';
-
-import { useParams } from 'react-router-dom';
-import { INewWord, IWord } from '../../../models/Dictionary/IWord';
-import { postWord } from '../../../services/wordsService';
-
-import { AddFAB } from '../../../components/AddFAB/AddFAB';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { fetchWords } from '../../../store/wordsSlice';
-import AppBars from '../../../components/AppBars/AppBars';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
+
+import { INewWord, IWord } from '../../../models/Dictionary/IWord';
+import { AddFAB } from '../../../components/AddFAB/AddFAB';
+import AppBars, { BarGuiding } from '../../../components/AppBars/AppBars';
 import { WordsList } from './components/WordsList';
 import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
+import { NewWordForm } from './components/NewWordForm';
 
 type TWordsPageProps = {};
 
@@ -25,16 +21,6 @@ declare type TWordsProps = {
 };
 
 const getPageName = (name: string) => `Dictionary ${name}`;
-
-const Words: React.FC<TWordsProps> = ({ words, onAddClicked }) => (
-  <>
-    {/* <WordList words={words} /> */}
-    <AddFAB
-      color="primary"
-      onClick={onAddClicked}
-    />
-  </>
-);
 
 const NoWords = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
@@ -48,21 +34,13 @@ const selectWords = (state: RootState) => state.words.words;
 
 export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { dictionaryId } = useParams();
 
   const words = useAppSelector(selectWords);
 
-  // const [words, setWords] = useState(initWords);
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
-
-  // const loadWordsAsync = async () => {
-  //   const result = await dispatch(fetchWords);
-  //   console.log(result);
-  // };
-
-  const loadWords = () => {
-  };
 
   useEffect(() => {
     dispatch(fetchWords(dictionaryId ? +dictionaryId : 0));
@@ -84,16 +62,21 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
     // });
   };
 
-  const handleNewWordClicked = () => {
-    setIsAddFormOpened((pv) => !pv);
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  const handleWordClick = (word: TElementPropsWithId) => {
+    console.log(word);
   };
 
   const handleFormClosed = () => {
     setIsAddFormOpened(() => false);
   };
 
-  const handleWordClick = (word: TElementPropsWithId) => {
-    console.log(word);
+  const handleAddBtnClicked = () => {
+    console.log('handleAddBtnClicked');
+    setIsAddFormOpened((pv) => !pv);
   };
 
   const content = words.length
@@ -106,8 +89,21 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
     : <NoWords />;
 
   return (
-    <AppBars.Top title={getPageName('name')}>
+    <AppBars.Top
+      title={getPageName('name')}
+      guiding={BarGuiding.back}
+      onGuidingClick={handleBackClick}
+    >
       {content}
+      <AddFAB
+        color="primary"
+        onClick={handleAddBtnClicked}
+      />
+      <NewWordForm
+        isOpened={isAddFormOpened}
+        onClose={handleFormClosed}
+        onSubmit={handleFormSubmit}
+      />
     </AppBars.Top>
   );
 };

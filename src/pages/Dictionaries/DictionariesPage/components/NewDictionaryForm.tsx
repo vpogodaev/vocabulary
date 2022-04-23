@@ -59,7 +59,7 @@ export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = (
     <Box
       component="form"
       onSubmit={handleSubmitForm}
-      id="wordInputForm"
+      id="dictionaryInputForm"
       sx={{
         display: 'grid',
         gridTemplateColumns: '1fr',
