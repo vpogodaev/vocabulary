@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import { fetchWords } from '../../../store/wordsSlice';
+import { fetchWords, postWord } from '../../../store/wordsSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
 
@@ -38,28 +38,27 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
 
   const { dictionaryId } = useParams();
 
+  const [numDictionaryId] = useState<number>(dictionaryId ? +dictionaryId : 0);
+
   const words = useAppSelector(selectWords);
 
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchWords(dictionaryId ? +dictionaryId : 0));
-  }, [dictionaryId]);
+    if (!dictionaryId) {
+      console.error('No dictionary id');
+    }
+  }, []);
 
-  const handleFormSubmit = ({ value1, value2 }: INewWord) => {
-    // const word: IWord = {
-    //   id: Math.max(...(
-    //     words.map((w) => w.id)
-    //   )) + 1,
-    //   value1,
-    //   value2,
-    // };
-    //
-    // postWord(word).then((r) => {
-    //   if (r.ok) {
-    //     loadWords();
-    //   }
-    // });
+
+  useEffect(() => {
+    dispatch(fetchWords(numDictionaryId));
+  }, [numDictionaryId]);
+
+  const handleFormSubmit = (newWord: INewWord) => {
+    newWord.dictionaryId = numDictionaryId;
+
+    dispatch(postWord(newWord));
   };
 
   const handleBackClick = () => {
@@ -75,7 +74,6 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   };
 
   const handleAddBtnClicked = () => {
-    console.log('handleAddBtnClicked');
     setIsAddFormOpened((pv) => !pv);
   };
 

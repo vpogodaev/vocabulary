@@ -5,7 +5,7 @@ export enum Methods {
   DELETE = 'DELETE',
 }
 
-export const httpFetch = async <T extends unknown = undefined>(
+export const httpFetch = async <T = undefined>(
   url: string,
   data?: unknown,
   method: Methods = Methods.GET,
@@ -20,6 +20,7 @@ export const httpFetch = async <T extends unknown = undefined>(
 
   const response = await fetch(url, params);
 
+  // TODO: actually, !ok is also ok status: fix it
   if (!response.ok) {
     throw new Error(response.status.toString());
   }

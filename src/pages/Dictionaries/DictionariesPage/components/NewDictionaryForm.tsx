@@ -17,9 +17,11 @@ const TEXT_LANG1_LABEL = 'First Language';
 const TEXT_LANG2_LABEL = 'Second Language';
 const TEXT_DESCRIPTION_LABEL = 'Description';
 
-export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = (
-  { isOpened, onClose, onSubmit },
-) => {
+export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = ({
+  isOpened,
+  onClose,
+  onSubmit,
+}) => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [lang1, setLang1] = useState<string>('');
@@ -44,7 +46,10 @@ export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = (
     }
 
     onSubmit({
-      name, description: description || undefined, lang1, lang2,
+      name,
+      description: description || undefined,
+      lang1,
+      lang2,
     });
 
     setName(() => '');
@@ -95,9 +100,7 @@ export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = (
 
   const actions = (
     <>
-      <Button onClick={handleCancelClicked}>
-        {TEXT_CANCEL_BTN}
-      </Button>
+      <Button onClick={handleCancelClicked}>{TEXT_CANCEL_BTN}</Button>
       <Button
         type="submit"
         form="wordInputForm"

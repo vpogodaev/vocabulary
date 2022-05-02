@@ -1,17 +1,25 @@
-enum PartsOfSpeach {
+export enum PartsOfSpeech {
+  empty = 'empty',
   noun = 'noun',
   verb = 'verb',
   adjective = 'adjective',
   pronoun = 'pronoun',
   conjunction = 'conjunction',
   interjection = 'interjection',
-  prenominal = 'prenominal'
+  prenominal = 'prenominal',
+}
+
+export type TWordValue = {
+  value: string;
+  isMain: boolean;
 }
 
 interface IWordBase {
-  // TODO: tmp
-  value1: string;
-  value2: string;
+  mainWord?: string;
+  secondaryWords?: TWordValue[];
+  translates: TWordValue[];
+  partOfSpeech: PartsOfSpeech;
+  description?: string;
 }
 
 export interface IWord extends IWordBase {
@@ -20,7 +28,5 @@ export interface IWord extends IWordBase {
 }
 
 export interface INewWord extends IWordBase {
-
+  dictionaryId?: number;
 }
-
-
