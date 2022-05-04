@@ -40,6 +40,74 @@
       "partOfSpeech": "noun",
       "dictionaryId": 1,
       "id": 7
+    },
+    {
+      "mainWord": "Test word",
+      "secondaryWords": [
+        {
+          "value": "Value 1",
+          "isMain": true
+        },
+        {
+          "value": "Value 2",
+          "isMain": false
+        },
+        {
+          "value": "Value 3",
+          "isMain": false
+        }
+      ],
+      "translates": [
+        {
+          "value": "Translate 1",
+          "isMain": true
+        },
+        {
+          "value": "Translate 2",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 1,
+      "id": 8
+    },
+    {
+      "mainWord": "Test1",
+      "secondaryWords": [
+        {
+          "value": "Value 1",
+          "isMain": true
+        },
+        {
+          "value": "Value 2",
+          "isMain": false
+        },
+        {
+          "value": "value 3",
+          "isMain": false
+        },
+        {
+          "value": "vAlue4",
+          "isMain": false
+        }
+      ],
+      "translates": [
+        {
+          "value": "Translate",
+          "isMain": true
+        },
+        {
+          "value": "Translate 2",
+          "isMain": false
+        },
+        {
+          "value": "translate 3",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "adjective",
+      "dictionaryId": 1,
+      "id": 9
     }
   ]
 }

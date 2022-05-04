@@ -5,7 +5,7 @@ import { ElementsList } from '../../../../components/ElementsList/ElementsList';
 
 type TWordsListProps = {
   words: IWord[];
-  onClick: (element: TElementPropsWithId) => void;
+  onClick?: (element: TElementPropsWithId) => void;
 };
 
 export const WordsList: React.FC<TWordsListProps> = ({ words, onClick }) => {

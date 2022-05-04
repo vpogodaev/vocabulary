@@ -12,6 +12,8 @@ import AppBars, { BarGuiding } from '../../../components/AppBars/AppBars';
 import { WordsList } from './components/WordsList';
 import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
 import { NewWordForm } from './components/NewWordForm';
+import { WordCard } from './components/WordCard';
+import { WordCardsList } from './components/WordCardsList';
 
 type TWordsPageProps = {};
 
@@ -24,9 +26,7 @@ const getPageName = (name: string) => `Dictionary ${name}`;
 
 const NoWords = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
-    <span>
-      No words found!
-    </span>
+    <span>No words found!</span>
   </Box>
 );
 
@@ -49,7 +49,6 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
       console.error('No dictionary id');
     }
   }, []);
-
 
   useEffect(() => {
     dispatch(fetchWords(numDictionaryId));
@@ -77,14 +76,16 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
     setIsAddFormOpened((pv) => !pv);
   };
 
-  const content = words.length
-    ? (
-      <WordsList
-        words={words}
-        onClick={handleWordClick}
-      />
-    )
-    : <NoWords />;
+  const content = words.length ? (
+    <WordCardsList words={words} />
+  ) : (
+    // <WordCard word={words[2]}/>
+    // <WordsList
+    //   words={words}
+    //   onClick={handleWordClick}
+    // />
+    <NoWords />
+  );
 
   return (
     <AppBars.Top
