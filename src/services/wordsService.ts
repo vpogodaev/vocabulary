@@ -4,11 +4,17 @@ import { httpFetch, Methods } from './http';
 
 const route = 'words';
 
-export const getWords = (dictionaryId: number): Promise<IWord[]> => httpFetch<IWord[]>(`${ORIGIN}/${route}?dictionaryId=${dictionaryId}`);
+export const getWords = (dictionaryId: number): Promise<IWord[]> =>
+  httpFetch<IWord[]>(`${ORIGIN}/${route}?dictionaryId=${dictionaryId}`);
 
-export const postWord = (word: INewWord): Promise<IWord> => httpFetch<IWord>(`${ORIGIN}/${route}`, word, Methods.POST);
+export const postWord = (word: INewWord): Promise<IWord> =>
+  httpFetch<IWord>(`${ORIGIN}/${route}`, word, Methods.POST);
+
+export const putWord = (word: IWord): Promise<IWord> =>
+  httpFetch<IWord>(`${ORIGIN}/${route}/${word.id}`, word, Methods.PUT);
 
 export const WordsAPI = {
   getWords,
   postWord,
+  putWord,
 };

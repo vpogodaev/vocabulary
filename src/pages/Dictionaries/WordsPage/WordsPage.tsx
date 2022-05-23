@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import { fetchWords, postWord } from '../../../store/wordsSlice';
+import { fetchWords } from '../../../store/wordsSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
 
-import { INewWord, IWord } from '../../../models/Dictionary/IWord';
+import { IWord } from '../../../models/Dictionary/IWord';
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import AppBars, { BarGuiding } from '../../../components/AppBars/AppBars';
-import { WordsList } from './components/WordsList';
-import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
-import { NewWordForm } from './components/NewWordForm';
-import { WordCard } from './components/WordCard';
 import { WordCardsList } from './components/WordCardsList';
+import { useHeight } from '../../../components/AddFAB/useHeight';
+import { MUI_SIZE_PX } from '../../../constants';
+import { Forms, FormState } from './components/Form/Forms';
 
 type TWordsPageProps = {};
 
@@ -39,10 +38,18 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const { dictionaryId } = useParams();
 
   const [numDictionaryId] = useState<number>(dictionaryId ? +dictionaryId : 0);
+  //const [isAddFormOpened, setIsAddFormOpened] = useState(false);
+  const [formState, setFormState] = useState<FormState>(FormState.CLOSED);
+  const [curWord, setCurWord] = useState<IWord | null>(null);
+
+  const { ref: fabRef, height: fabHeight, other } = useHeight(['bottom']);
+  const fabBottom = parseInt(other?.bottom ?? 16, 10);
+  const wordsMargin = useMemo(
+    () => Math.ceil((fabBottom * 2 + fabHeight) / MUI_SIZE_PX),
+    [fabHeight, fabBottom],
+  );
 
   const words = useAppSelector(selectWords);
-
-  const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
   useEffect(() => {
     if (!dictionaryId) {
@@ -54,36 +61,30 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
     dispatch(fetchWords(numDictionaryId));
   }, [numDictionaryId]);
 
-  const handleFormSubmit = (newWord: INewWord) => {
-    newWord.dictionaryId = numDictionaryId;
-
-    dispatch(postWord(newWord));
-  };
-
   const handleBackClick = () => {
     navigate(-1);
   };
 
-  const handleWordClick = (word: TElementPropsWithId) => {
-    console.log(word);
+  const handleEditWordClicked = (word: IWord) => {
+    setCurWord(() => word);
+    setFormState(FormState.EDIT);
   };
 
   const handleFormClosed = () => {
-    setIsAddFormOpened(() => false);
+    setFormState(FormState.CLOSED);
   };
 
   const handleAddBtnClicked = () => {
-    setIsAddFormOpened((pv) => !pv);
+    setFormState(FormState.NEW);
   };
 
   const content = words.length ? (
-    <WordCardsList words={words} />
+    <WordCardsList
+      words={words}
+      marginBottom={wordsMargin}
+      onEditClicked={handleEditWordClicked}
+    />
   ) : (
-    // <WordCard word={words[2]}/>
-    // <WordsList
-    //   words={words}
-    //   onClick={handleWordClick}
-    // />
     <NoWords />
   );
 
@@ -97,11 +98,13 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
       <AddFAB
         color="primary"
         onClick={handleAddBtnClicked}
+        ref={fabRef}
       />
-      <NewWordForm
-        isOpened={isAddFormOpened}
+      <Forms
+        state={formState}
+        wordToEdit={curWord}
         onClose={handleFormClosed}
-        onSubmit={handleFormSubmit}
+        dictionaryId={numDictionaryId}
       />
     </AppBars.Top>
   );

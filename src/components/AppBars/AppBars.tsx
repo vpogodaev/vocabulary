@@ -5,14 +5,13 @@ import { Top } from './Top';
 
 type TAppBarsProps = {
   children: React.ReactNode;
-}
+};
 
 export enum BarGuiding {
   back = 'BACK',
 }
 
-const barGuiding = (guiding: BarGuiding, onClick: () => void = () => {
-}) => {
+const barGuiding = (guiding: BarGuiding, onClick: () => void = () => {}) => {
   const guidings = {
     // TODO: may be back btn should include navigate(-1) to not create it in every component
     [BarGuiding.back]: () => (
@@ -34,19 +33,15 @@ const barGuiding = (guiding: BarGuiding, onClick: () => void = () => {
 };
 
 type TBarGuidingFactory = {
-  guiding: BarGuiding,
-  onClick?: () => void
-}
+  guiding: BarGuiding;
+  onClick?: () => void;
+};
 
 export const BarGuidingFactory = ({ guiding, onClick }: TBarGuidingFactory) => (
-  <>
-    {barGuiding(guiding, onClick)}
-  </>
+  <>{barGuiding(guiding, onClick)}</>
 );
 
-const AppBars = ({ children }: TAppBarsProps) => (
-  { children }
-);
+const AppBars = ({ children }: TAppBarsProps) => ({ children });
 AppBars.Top = Top;
 
 export default AppBars;

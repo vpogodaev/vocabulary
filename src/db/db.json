@@ -23,12 +23,6 @@
   ],
   "words": [
     {
-      "id": 6,
-      "value1": "かさ",
-      "value2": "Зонт",
-      "dictionaryId": 2
-    },
-    {
       "mainWord": "test",
       "secondaryWords": [],
       "translates": [
@@ -108,6 +102,418 @@
       "partOfSpeech": "adjective",
       "dictionaryId": 1,
       "id": 9
+    },
+    {
+      "mainWord": "日本",
+      "secondaryWords": [
+        {
+          "value": "にほん",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Япония",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "dictionaryId": 1,
+      "id": 10
+    },
+    {
+      "secondaryWords": [
+        {
+          "value": "かさ",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Зонт",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "dictionaryId": 2,
+      "id": 11
+    },
+    {
+      "mainWord": "本",
+      "secondaryWords": [
+        {
+          "value": "ほん",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Основание",
+          "isMain": true
+        },
+        {
+          "value": "Книга",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "noun",
+      "dictionaryId": 2,
+      "id": 12
+    },
+    {
+      "mainWord": "日本",
+      "secondaryWords": [
+        {
+          "value": "にほん",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Япония",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "dictionaryId": 2,
+      "id": 13
+    },
+    {
+      "secondaryWords": [
+        {
+          "value": "する",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Делать",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "verb",
+      "dictionaryId": 2,
+      "id": 14
+    },
+    {
+      "mainWord": "来る",
+      "secondaryWords": [
+        {
+          "value": "くる",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "Идти",
+          "isMain": true
+        },
+        {
+          "value": "Ехать",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "verb",
+      "dictionaryId": 2,
+      "id": 15
+    },
+    {
+      "secondaryWords": [
+        {
+          "value": "s",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "test",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 2,
+      "id": 16
+    },
+    {
+      "secondaryWords": [
+        {
+          "value": "あなた",
+          "isMain": true
+        },
+        {
+          "value": "anata",
+          "isMain": false
+        }
+      ],
+      "translates": [
+        {
+          "value": "ты",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 2,
+      "id": 17
+    },
+    {
+      "mainWord": "1",
+      "secondaryWords": [
+        {
+          "value": "1",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "1",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 18
+    },
+    {
+      "mainWord": "2",
+      "secondaryWords": [
+        {
+          "value": "2",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "2",
+          "isMain": true
+        },
+        {
+          "value": "231",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "verb",
+      "id": 19,
+      "dictionaryId": 3
+    },
+    {
+      "mainWord": "3",
+      "secondaryWords": [
+        {
+          "value": "3",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "334",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "id": 20,
+      "dictionaryId": 3
+    },
+    {
+      "mainWord": "4",
+      "secondaryWords": [
+        {
+          "value": "4",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "4",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 21
+    },
+    {
+      "mainWord": "5",
+      "secondaryWords": [
+        {
+          "value": "5",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "5",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 22
+    },
+    {
+      "mainWord": "6",
+      "secondaryWords": [
+        {
+          "value": "6",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "6",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 23
+    },
+    {
+      "mainWord": "7",
+      "secondaryWords": [
+        {
+          "value": "7",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "7",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 24
+    },
+    {
+      "mainWord": "8",
+      "secondaryWords": [
+        {
+          "value": "8",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "8",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 25
+    },
+    {
+      "mainWord": "9",
+      "secondaryWords": [
+        {
+          "value": "9",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "9",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 26
+    },
+    {
+      "mainWord": "101010101010101010101010101010",
+      "secondaryWords": [
+        {
+          "value": "101010101010101010101010101010",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "101010101010101010101010101010",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 27
+    },
+    {
+      "mainWord": "test",
+      "secondaryWords": [
+        {
+          "value": "testt",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "t",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "",
+      "dictionaryId": 3,
+      "id": 28
+    },
+    {
+      "mainWord": "sd",
+      "secondaryWords": [
+        {
+          "value": "wd",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "a",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "noun",
+      "dictionaryId": 3,
+      "id": 29
+    },
+    {
+      "mainWord": "3",
+      "secondaryWords": [
+        {
+          "value": "3",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "3",
+          "isMain": true
+        },
+        {
+          "value": "4",
+          "isMain": false
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 30
+    },
+    {
+      "mainWord": "3",
+      "secondaryWords": [
+        {
+          "value": "3",
+          "isMain": true
+        }
+      ],
+      "translates": [
+        {
+          "value": "3",
+          "isMain": true
+        }
+      ],
+      "partOfSpeech": "empty",
+      "dictionaryId": 3,
+      "id": 31
     }
   ]
 }

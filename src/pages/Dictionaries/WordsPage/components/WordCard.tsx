@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   IWord,
   PartsOfSpeech,
@@ -38,6 +40,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 type TWordCardProps = {
   word: IWord;
+  onEditClicked: (word: IWord) => void;
 };
 
 const WordsList = React.memo(
@@ -65,10 +68,11 @@ const WordsList = React.memo(
   },
 );
 
-export const WordCard: React.FC<TWordCardProps> = ({ word }) => {
+export const WordCard: React.FC<TWordCardProps> = ({ word, onEditClicked }) => {
   const [expanded, setExpanded] = useState(false);
 
-  const title = word.mainWord || word.secondaryWords?.find((w) => w.isMain);
+  const title =
+    word.mainWord || word.secondaryWords?.find((w) => w.isMain)?.value;
   const mainTranslate = (
     word.translates.find((t) => t.isMain) || word.translates[0]
   ).value;
@@ -77,14 +81,21 @@ export const WordCard: React.FC<TWordCardProps> = ({ word }) => {
     setExpanded((pv) => !pv);
   };
 
+  const handleEditClicked = () => {
+    onEditClicked(word);
+  };
+
   return (
     <Card sx={{ maxWidth: '100%' }}>
       <CardHeader
         disableTypography
+        sx={{ display: 'grid', gridTemplateColumns: 'calc(100% - 40px) 40px' }}
+        onClick={handleExpandClicked}
         title={
           <Typography
             variant="h5"
             component="h2"
+            noWrap
           >
             {title}
           </Typography>
@@ -93,21 +104,21 @@ export const WordCard: React.FC<TWordCardProps> = ({ word }) => {
           <Typography
             variant="body1"
             component="span"
+            noWrap
           >
             {mainTranslate}
           </Typography>
         }
+        action={
+          <ExpandMore
+            expand={expanded}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        }
       />
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClicked}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
       <Collapse
         in={expanded}
         timeout="auto"
@@ -138,6 +149,15 @@ export const WordCard: React.FC<TWordCardProps> = ({ word }) => {
               </Typography>
             </>
           )}
+          <CardActions>
+            <IconButton
+              aria-label="edit"
+              color="primary"
+              onClick={handleEditClicked}
+            >
+              <EditIcon />
+            </IconButton>
+          </CardActions>
         </CardContent>
       </Collapse>
     </Card>

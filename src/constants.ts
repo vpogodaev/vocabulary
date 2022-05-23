@@ -1,0 +1,1 @@
+export const MUI_SIZE_PX = 8;

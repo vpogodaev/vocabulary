@@ -20,10 +20,15 @@ export const fetchWords = createAsyncThunk(
   async (dictionaryId: number) => await WordsAPI.getWords(dictionaryId),
 );
 
-export const postWord = createAsyncThunk(
-  `${name}/postWords`,
+export const postNewWord = createAsyncThunk(
+  `${name}/postNewWord`,
   async (word: INewWord) => await WordsAPI.postWord(word),
 );
+
+export const editOldWord = createAsyncThunk(
+  `${name}/editOldWord`,
+  async (word: IWord) => await  WordsAPI.putWord(word),
+)
 
 export const wordsSlice = createSlice({
   name,
@@ -41,15 +46,26 @@ export const wordsSlice = createSlice({
       .addCase(fetchWords.rejected, (state, action) => {
         state.status = StateStatuses.ERROR;
       })
-      .addCase(postWord.pending, (state) => {
+      .addCase(postNewWord.pending, (state) => {
         state.status = StateStatuses.LOADING;
       })
-      .addCase(postWord.fulfilled, (state, action) => {
+      .addCase(postNewWord.fulfilled, (state, action) => {
         state.status = StateStatuses.IDLE;
-        console.log('postWords.fullfilled', action.payload);
         state.words.push(action.payload);
       })
-      .addCase(postWord.rejected, (state) => {
+      .addCase(postNewWord.rejected, (state) => {
+        state.status = StateStatuses.ERROR;
+      })
+      .addCase(editOldWord.pending, (state) => {
+        state.status = StateStatuses.LOADING;
+      })
+      .addCase(editOldWord.fulfilled, (state, action) => {
+        state.status = StateStatuses.IDLE;
+        const { id } = action.payload;
+        const index = state.words.findIndex(w => w.id === id);
+        state.words[index] = action.payload;
+      })
+      .addCase(editOldWord.rejected, (state) => {
         state.status = StateStatuses.ERROR;
       })
       .addDefaultCase(() => {});

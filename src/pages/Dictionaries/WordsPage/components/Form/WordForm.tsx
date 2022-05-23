@@ -1,20 +1,24 @@
 import { Box, Button, SelectChangeEvent, TextField } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
-import { SliderDialog } from '../../../../components/SliderDialog/SliderDialog';
+import { SliderDialog } from '../../../../../components/SliderDialog/SliderDialog';
 import {
   INewWord,
   PartsOfSpeech,
   TWordValue,
-} from '../../../../models/Dictionary/IWord';
-import { ComboBox } from '../../../../components/Inputs/ComboBox';
+} from '../../../../../models/Dictionary/IWord';
+import { ComboBox } from '../../../../../components/Inputs/ComboBox';
 
 type TNewWordFormProps = {
+  formName?: string;
   isOpened: boolean;
   onClose: () => void;
   onSubmit: (word: INewWord) => void;
+  mainWord?: string;
+  secondaryWords?: string;
+  translates?: string;
+  partOfSpeech?: string;
 };
 
-const TEXT_NEW_WORD_HEADER = 'New word';
 const TEXT_MAIN_VALUE = 'Main value';
 const TEXT_MAIN_VALUE_ERROR = 'Set either Main value or Secondary value(s)';
 const TEXT_SECONDARY_VALUE = 'Secondary value(s)';
@@ -24,7 +28,7 @@ const TEXT_SECONDARY_VALUE_ERROR =
   'Set either Main value or Secondary value(s)';
 const TEXT_TRANSLATE = 'Translate(s)';
 const TEXT_TRANSLATE_HELPER =
-  'Enter one or several translates on different lines';
+  'Enter one or several _translates on different lines';
 const TEXT_TRANSLATE_ERROR = 'Enter at least one translate';
 const TEXT_CANCEL_BTN = 'Cancel';
 const TEXT_SUBMIT_BTN = 'Submit';
@@ -49,17 +53,20 @@ const getWordsArray = (wordsString: string): TWordValue[] | undefined => {
   return wordsArray;
 };
 
-export const NewWordForm: React.FC<TNewWordFormProps> = ({
+export const WordForm: React.FC<TNewWordFormProps> = ({
   isOpened,
   onClose,
   onSubmit,
+  formName = '',
+  mainWord = '',
+  secondaryWords = '',
+  translates = '',
+  partOfSpeech = '',
 }) => {
-  const [mainWord, setMainWord] = useState<string>('');
-  const [secondaryWords, setSecondaryWords] = useState<string>('');
-  const [translates, setTranslates] = useState<string>('');
-  const [partOfSpeech, setPartOfSpeech] = useState<string>(
-    partsOfSpeech[0].value,
-  );
+  const [_mainWord, setMainWord] = useState<string>(mainWord);
+  const [_secondaryWords, setSecondaryWords] = useState<string>(secondaryWords);
+  const [_translates, setTranslates] = useState<string>(translates);
+  const [_partOfSpeech, setPartOfSpeech] = useState<string>(partOfSpeech);
   const [isMainSecondaryError, setIsMainSecondaryError] =
     useState<boolean>(false);
   const [isTranslateError, setIsTranslateError] = useState<boolean>(false);
@@ -88,23 +95,23 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!mainWord.trim() && !secondaryWords.trim()) {
+    if (!_mainWord.trim() && !_secondaryWords.trim()) {
       setIsMainSecondaryError(true);
       return;
     }
 
     setIsMainSecondaryError(false);
 
-    const _translates = getWordsArray(translates);
-    if (!_translates) {
+    const translates = getWordsArray(_translates);
+    if (!translates) {
       setIsTranslateError(true);
       return;
     }
     const newWord: INewWord = {
-      mainWord: mainWord.trim() || undefined,
-      secondaryWords: getWordsArray(secondaryWords),
-      translates: _translates,
-      partOfSpeech: partOfSpeech as PartsOfSpeech,
+      mainWord: _mainWord.trim() || undefined,
+      secondaryWords: getWordsArray(_secondaryWords),
+      translates,
+      partOfSpeech: _partOfSpeech as PartsOfSpeech,
     };
 
     onSubmit(newWord);
@@ -113,8 +120,6 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
     setSecondaryWords(() => '');
     setTranslates(() => '');
     setPartOfSpeech(() => partsOfSpeech[0].value);
-
-    onClose();
   };
 
   const form = (
@@ -132,7 +137,7 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
       <TextField
         sx={{ width: '100%' }}
         label={TEXT_MAIN_VALUE}
-        value={mainWord}
+        value={_mainWord}
         onChange={(e) =>
           handleTextFieldChange(e, setMainWord, setIsMainSecondaryError)
         }
@@ -149,7 +154,7 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
             : TEXT_SECONDARY_VALUE_HELPER
         }
         multiline
-        value={secondaryWords}
+        value={_secondaryWords}
         onChange={(e) =>
           handleTextFieldChange(e, setSecondaryWords, setIsMainSecondaryError)
         }
@@ -163,14 +168,14 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
         }
         multiline
         required
-        value={translates}
+        value={_translates}
         onChange={(e) =>
           handleTextFieldChange(e, setTranslates, setIsTranslateError)
         }
       />
       <ComboBox
-        id="partOfSpeech"
-        value={partOfSpeech}
+        id="_partOfSpeech"
+        value={_partOfSpeech}
         onChange={handleComboboxChange}
         label="Part of Speech"
         items={partsOfSpeech}
@@ -194,7 +199,7 @@ export const NewWordForm: React.FC<TNewWordFormProps> = ({
     <SliderDialog
       isOpened={isOpened}
       onCloseClick={onClose}
-      title={TEXT_NEW_WORD_HEADER}
+      title={formName}
       content={form}
       actions={actions}
     />
