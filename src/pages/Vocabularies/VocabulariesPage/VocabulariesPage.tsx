@@ -3,50 +3,50 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { fetchDictionaries, postDictionary } from '../../../store/dictionariesSlice';
+import { fetchVocabularies, postVocabularies } from '../../../store/vocabulariesSlice';
 import { useHeight } from '../../../components/AddFAB/useHeight';
 
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import { ElementsList } from '../../../components/ElementsList/ElementsList';
-import { INewDictionary } from '../../../models/Dictionary/IDictionary';
-import { NewDictionaryForm } from './components/NewDictionaryForm';
+import { INewVocabulary } from '../../../models/Vocabulary/IVocabulary';
+import { NewVocabularyForm } from './components/NewVocabularyForm';
 import { TElementPropsWithId } from '../../../components/ElementsList/elementProps';
 import { RootState } from '../../../store/store';
 import AppBars from '../../../components/AppBars/AppBars';
 
-type TDictionariesPageProps = {};
+type TVocabulariesPageProps = {};
 
-const NoDictionaries = () => (
+const NoVocabularies = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
     <span>
-      No dictionaries found!
+      No vocabularies found!
     </span>
   </Box>
 );
 
-const selectDictionaries = (state: RootState) => state.dictionaries.dictionaries;
+const selectVocabularies = (state: RootState) => state.vocabularies.vocabularies;
 
-const PAGE_NAME = 'Dictionaries';
+const PAGE_NAME = 'Vocabularies';
 
-export const DictionariesPage: React.FC<TDictionariesPageProps> = () => {
+export const VocabulariesPage: React.FC<TVocabulariesPageProps> = () => {
   const dispatch = useAppDispatch();
 
   const { ref: fabRef, height: fabHeight } = useHeight();
   const navigate = useNavigate();
 
-  const dictionaries = useAppSelector(selectDictionaries);
+  const vocabularies = useAppSelector(selectVocabularies);
 
   const [isAddFormOpened, setIsAddFormOpened] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchDictionaries());
+    dispatch(fetchVocabularies());
   }, []);
 
-  const handleFormSubmit = (dictionary: INewDictionary) => {
-    dispatch(postDictionary(dictionary));
+  const handleFormSubmit = (vocabulary: INewVocabulary) => {
+    dispatch(postVocabularies(vocabulary));
   };
 
-  const handleNewDictionaryClicked = () => {
+  const handleNewVocabularyClicked = () => {
     setIsAddFormOpened(() => true);
   };
 
@@ -54,37 +54,37 @@ export const DictionariesPage: React.FC<TDictionariesPageProps> = () => {
     setIsAddFormOpened(() => false);
   };
 
-  const getDictionariesToRender = useMemo<TElementPropsWithId[]>(() => dictionaries.map((d) => (
+  const getVocabulariesToRender = useMemo<TElementPropsWithId[]>(() => vocabularies.map((d) => (
     {
       primaryText: d.name,
       secondaryText: d.description,
       id: d.id.toString(),
     }
-  )), [dictionaries]);
+  )), [vocabularies]);
 
   const handleElementClick = (element: TElementPropsWithId) => {
     const { id } = element;
     navigate(`${id}`);
   };
 
-  const content = dictionaries.length
+  const content = vocabularies.length
     ? (
       <ElementsList
-        elements={getDictionariesToRender}
+        elements={getVocabulariesToRender}
         onElementClick={handleElementClick}
       />
     )
-    : <NoDictionaries />;
+    : <NoVocabularies />;
 
   return (
     <AppBars.Top title={PAGE_NAME}>
       {content}
       <AddFAB
         color="primary"
-        onClick={handleNewDictionaryClicked}
+        onClick={handleNewVocabularyClicked}
         ref={fabRef}
       />
-      <NewDictionaryForm
+      <NewVocabularyForm
         isOpened={isAddFormOpened}
         onClose={handleFormClosed}
         onSubmit={handleFormSubmit}

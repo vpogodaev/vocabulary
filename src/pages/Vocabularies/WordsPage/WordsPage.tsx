@@ -6,7 +6,7 @@ import { fetchWords } from '../../../store/wordsSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
 
-import { IWord } from '../../../models/Dictionary/IWord';
+import { IWord } from '../../../models/Vocabulary/IWord';
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import AppBars, { BarGuiding } from '../../../components/AppBars/AppBars';
 import { WordCardsList } from './components/WordCardsList';
@@ -21,7 +21,7 @@ declare type TWordsProps = {
   onAddClicked: () => void;
 };
 
-const getPageName = (name: string) => `Dictionary ${name}`;
+const getPageName = (name: string) => `Vocabulary ${name}`;
 
 const NoWords = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
@@ -35,9 +35,9 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { dictionaryId } = useParams();
+  const { vocabularyId } = useParams();
 
-  const [numDictionaryId] = useState<number>(dictionaryId ? +dictionaryId : 0);
+  const [numVocabularyId] = useState<number>(vocabularyId ? +vocabularyId : 0);
   //const [isAddFormOpened, setIsAddFormOpened] = useState(false);
   const [formState, setFormState] = useState<FormState>(FormState.CLOSED);
   const [curWord, setCurWord] = useState<IWord | null>(null);
@@ -52,14 +52,14 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const words = useAppSelector(selectWords);
 
   useEffect(() => {
-    if (!dictionaryId) {
-      console.error('No dictionary id');
+    if (!vocabularyId) {
+      console.error('No vocabulary id');
     }
   }, []);
 
   useEffect(() => {
-    dispatch(fetchWords(numDictionaryId));
-  }, [numDictionaryId]);
+    dispatch(fetchWords(numVocabularyId));
+  }, [numVocabularyId]);
 
   const handleBackClick = () => {
     navigate(-1);
@@ -104,7 +104,7 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
         state={formState}
         wordToEdit={curWord}
         onClose={handleFormClosed}
-        dictionaryId={numDictionaryId}
+        vocabularyId={numVocabularyId}
       />
     </AppBars.Top>
   );

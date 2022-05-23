@@ -1,5 +1,5 @@
 import React from 'react';
-import { INewWord } from '../../../../../models/Dictionary/IWord';
+import { INewWord } from '../../../../../models/Vocabulary/IWord';
 import { WordForm } from './WordForm';
 import { useAppDispatch } from '../../../../../store/hooks';
 import { postNewWord } from '../../../../../store/wordsSlice';
@@ -7,7 +7,7 @@ import { postNewWord } from '../../../../../store/wordsSlice';
 type TNewWordFormProps = {
   isOpened: boolean;
   onClose: () => void;
-  dictionaryId: number;
+  vocabularyId: number;
 };
 
 const TEXT_NEW_WORD_HEADER = 'New word';
@@ -15,12 +15,12 @@ const TEXT_NEW_WORD_HEADER = 'New word';
 export const NewWordForm: React.FC<TNewWordFormProps> = ({
   isOpened,
   onClose,
-  dictionaryId,
+  vocabularyId,
 }) => {
   const dispatch = useAppDispatch();
 
   const handleSubmitForm = (newWord: INewWord) => {
-    newWord.dictionaryId = dictionaryId;
+    newWord.vocabularyId = vocabularyId;
 
     dispatch(postNewWord(newWord));
     onClose();

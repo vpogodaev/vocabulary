@@ -1,15 +1,15 @@
 import React, { FormEvent, useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
 import { SliderDialog } from '../../../../components/SliderDialog/SliderDialog';
-import { INewDictionary } from '../../../../models/Dictionary/IDictionary';
+import { INewVocabulary } from '../../../../models/Vocabulary/IVocabulary';
 
-type TNewDictionaryFormProps = {
+type TNewVocabularyFormProps = {
   isOpened: boolean;
   onClose: () => void;
-  onSubmit: (dictionary: INewDictionary) => void;
+  onSubmit: (vocabulary: INewVocabulary) => void;
 };
 
-const TEXT_NEW_DICTIONARY_HEADER = 'New dictionary';
+const TEXT_NEW_VOCABULARY_HEADER = 'New vocabularies';
 const TEXT_CANCEL_BTN = 'Cancel';
 const TEXT_SUBMIT_BTN = 'Submit';
 const TEXT_NAME_LABEL = 'Name';
@@ -17,7 +17,7 @@ const TEXT_LANG1_LABEL = 'First Language';
 const TEXT_LANG2_LABEL = 'Second Language';
 const TEXT_DESCRIPTION_LABEL = 'Description';
 
-export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = ({
+export const NewVocabularyForm: React.FC<TNewVocabularyFormProps> = ({
   isOpened,
   onClose,
   onSubmit,
@@ -64,7 +64,7 @@ export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = ({
     <Box
       component="form"
       onSubmit={handleSubmitForm}
-      id="dictionaryInputForm"
+      id="vocabularyInputForm"
       sx={{
         display: 'grid',
         gridTemplateColumns: '1fr',
@@ -114,7 +114,7 @@ export const NewDictionaryForm: React.FC<TNewDictionaryFormProps> = ({
     <SliderDialog
       isOpened={isOpened}
       onCloseClick={onClose}
-      title={TEXT_NEW_DICTIONARY_HEADER}
+      title={TEXT_NEW_VOCABULARY_HEADER}
       content={form}
       actions={actions}
     />

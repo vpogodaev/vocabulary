@@ -1,8 +1,8 @@
 {
-  "dictionaries": [
+  "vocabularies": [
     {
       "name": "En-Ru",
-      "description": "English-Russian dictionary",
+      "description": "English-Russian vocabulary",
       "lang1": "en",
       "lang2": "ru",
       "id": 1
@@ -32,7 +32,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 1,
+      "vocabularyId": 1,
       "id": 7
     },
     {
@@ -62,7 +62,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 1,
+      "vocabularyId": 1,
       "id": 8
     },
     {
@@ -100,7 +100,7 @@
         }
       ],
       "partOfSpeech": "adjective",
-      "dictionaryId": 1,
+      "vocabularyId": 1,
       "id": 9
     },
     {
@@ -118,7 +118,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 1,
+      "vocabularyId": 1,
       "id": 10
     },
     {
@@ -135,7 +135,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 11
     },
     {
@@ -157,7 +157,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 12
     },
     {
@@ -175,7 +175,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 13
     },
     {
@@ -192,7 +192,7 @@
         }
       ],
       "partOfSpeech": "verb",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 14
     },
     {
@@ -214,7 +214,7 @@
         }
       ],
       "partOfSpeech": "verb",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 15
     },
     {
@@ -231,7 +231,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 16
     },
     {
@@ -252,7 +252,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 2,
+      "vocabularyId": 2,
       "id": 17
     },
     {
@@ -270,7 +270,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 18
     },
     {
@@ -293,7 +293,7 @@
       ],
       "partOfSpeech": "verb",
       "id": 19,
-      "dictionaryId": 3
+      "vocabularyId": 3
     },
     {
       "mainWord": "3",
@@ -311,7 +311,7 @@
       ],
       "partOfSpeech": "empty",
       "id": 20,
-      "dictionaryId": 3
+      "vocabularyId": 3
     },
     {
       "mainWord": "4",
@@ -328,7 +328,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 21
     },
     {
@@ -346,7 +346,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 22
     },
     {
@@ -364,7 +364,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 23
     },
     {
@@ -382,7 +382,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 24
     },
     {
@@ -400,7 +400,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 25
     },
     {
@@ -418,7 +418,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 26
     },
     {
@@ -436,7 +436,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 27
     },
     {
@@ -454,7 +454,7 @@
         }
       ],
       "partOfSpeech": "",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 28
     },
     {
@@ -472,7 +472,7 @@
         }
       ],
       "partOfSpeech": "noun",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 29
     },
     {
@@ -494,7 +494,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 30
     },
     {
@@ -512,7 +512,7 @@
         }
       ],
       "partOfSpeech": "empty",
-      "dictionaryId": 3,
+      "vocabularyId": 3,
       "id": 31
     }
   ]

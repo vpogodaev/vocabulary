@@ -5,7 +5,7 @@ import {
   INewWord,
   PartsOfSpeech,
   TWordValue,
-} from '../../../../../models/Dictionary/IWord';
+} from '../../../../../models/Vocabulary/IWord';
 import { ComboBox } from '../../../../../components/Inputs/ComboBox';
 
 type TNewWordFormProps = {

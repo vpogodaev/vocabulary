@@ -8,9 +8,8 @@ import { Routes, Route } from 'react-router-dom';
 import { MainPage } from '../../pages/MainPage/MainPage';
 
 import styles from './App.module.scss';
-import { DictionariesPage } from '../../pages/Dictionaries/DictionariesPage/DictionariesPage';
-import { WordsPage } from '../../pages/Dictionaries/WordsPage/WordsPage';
-import { DictionaryPage } from '../../pages/Dictionaries/DictionaryPage/DictionaryPage';
+import { VocabulariesPage } from '../../pages/Vocabularies/VocabulariesPage/VocabulariesPage';
+import { WordsPage } from '../../pages/Vocabularies/WordsPage/WordsPage';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -41,11 +40,11 @@ function App() {
             element={<MainPage />}
           />
           <Route
-            path="dictionaries"
-            element={<DictionariesPage />}
+            path="vocabularies"
+            element={<VocabulariesPage />}
           />
           <Route
-            path="dictionaries/:dictionaryId"
+            path="vocabularies/:vocabularyId"
             element={<WordsPage />}
           />
         </Routes>

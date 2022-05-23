@@ -1,5 +1,5 @@
 import React from 'react';
-import { IWord } from '../../../../models/Dictionary/IWord';
+import { IWord } from '../../../../models/Vocabulary/IWord';
 import { WordCard } from './WordCard';
 import { Grid } from '@mui/material';
 

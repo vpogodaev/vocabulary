@@ -17,7 +17,7 @@ import {
   IWord,
   PartsOfSpeech,
   TWordValue,
-} from '../../../../models/Dictionary/IWord';
+} from '../../../../models/Vocabulary/IWord';
 import { ElementsList } from '../../../../components/ElementsList/ElementsList';
 
 const TEXT_SECONDARY_WORDS = 'Secondary words';

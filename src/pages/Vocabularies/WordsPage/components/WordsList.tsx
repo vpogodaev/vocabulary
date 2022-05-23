@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { IWord } from '../../../../models/Dictionary/IWord';
+import { IWord } from '../../../../models/Vocabulary/IWord';
 import { TElementPropsWithId } from '../../../../components/ElementsList/elementProps';
 import { ElementsList } from '../../../../components/ElementsList/ElementsList';
 

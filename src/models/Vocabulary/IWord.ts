@@ -23,10 +23,10 @@ interface IWordBase {
 }
 
 export interface IWord extends IWordBase {
-  dictionaryId: number;
+  vocabularyId: number;
   id: number;
 }
 
 export interface INewWord extends IWordBase {
-  dictionaryId?: number;
+  vocabularyId?: number;
 }

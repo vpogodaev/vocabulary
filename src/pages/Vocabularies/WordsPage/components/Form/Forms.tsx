@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IWord } from '../../../../../models/Dictionary/IWord';
+import { IWord } from '../../../../../models/Vocabulary/IWord';
 import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
 
@@ -13,21 +13,21 @@ type TFormProps = {
   state: FormState;
   wordToEdit: IWord | null;
   onClose: () => void;
-  dictionaryId: number;
+  vocabularyId: number;
 };
 
 export const Forms: React.FC<TFormProps> = ({
   state,
   wordToEdit = null,
   onClose,
-  dictionaryId,
+  vocabularyId,
 }) => {
   const form = {
     [FormState.NEW]: (
       <NewWordForm
         isOpened={state === FormState.NEW}
         onClose={onClose}
-        dictionaryId={dictionaryId}
+        vocabularyId={vocabularyId}
       />
     ),
     [FormState.EDIT]: (

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { INewWord, IWord } from '../models/Dictionary/IWord';
+import { INewWord, IWord } from '../models/Vocabulary/IWord';
 import { StateStatuses } from './types';
 import { WordsAPI } from '../services/wordsService';
 
@@ -17,7 +17,7 @@ const initialState: IWordsState = {
 
 export const fetchWords = createAsyncThunk(
   `${name}/fetchWords`,
-  async (dictionaryId: number) => await WordsAPI.getWords(dictionaryId),
+  async (vocabularyId: number) => await WordsAPI.getWords(vocabularyId),
 );
 
 export const postNewWord = createAsyncThunk(

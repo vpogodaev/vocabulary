@@ -4,7 +4,7 @@ import {
   INewWord,
   IWord,
   TWordValue,
-} from '../../../../../models/Dictionary/IWord';
+} from '../../../../../models/Vocabulary/IWord';
 import { useAppDispatch } from '../../../../../store/hooks';
 import { editOldWord } from '../../../../../store/wordsSlice';
 
@@ -47,11 +47,11 @@ export const EditWordForm: React.FC<TEditWordFormProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const { mainWord, secondaryWords, translates, partOfSpeech, dictionaryId } =
+  const { mainWord, secondaryWords, translates, partOfSpeech, vocabularyId } =
     oldWord;
 
   const handleSubmitForm = (newWord: INewWord) => {
-    const word: IWord = { ...newWord, id: oldWord.id, dictionaryId };
+    const word: IWord = { ...newWord, id: oldWord.id, vocabularyId: vocabularyId };
 
     dispatch(editOldWord(word));
     onClose();
