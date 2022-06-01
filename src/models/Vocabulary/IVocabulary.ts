@@ -1,6 +1,9 @@
+import { VocabularyBaseLanguage } from './Language';
+
 interface IVocabularyBase {
   name: string;
   description?: string;
+  baseLanguage: VocabularyBaseLanguage;
   lang1: string;
   lang2: string;
 }
@@ -9,5 +12,4 @@ export interface IVocabulary extends IVocabularyBase {
   id: number;
 }
 
-export interface INewVocabulary extends IVocabularyBase {
-}
+export type INewVocabulary = IVocabularyBase;

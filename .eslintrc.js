@@ -33,6 +33,8 @@ module.exports = {
     'no-underscore-dangle': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-return-assign': 'off',
+    'spaced-comment': 'warn',
+    'react/no-array-index-key': 'warn',
     // TODO: 'react/jsx-closing-bracket-location':
   },
 };

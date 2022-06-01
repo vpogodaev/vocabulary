@@ -1,6 +1,6 @@
 import { Box, Button, SelectChangeEvent, TextField } from '@mui/material';
 import React, { FormEvent, useState } from 'react';
-import { SliderDialog } from '../../../../../components/SliderDialog/SliderDialog';
+import { SliderDialog } from '../../../../../components/Dialogs/SliderDialog';
 import {
   INewWord,
   PartsOfSpeech,

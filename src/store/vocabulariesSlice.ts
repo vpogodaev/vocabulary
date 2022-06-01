@@ -6,9 +6,9 @@ import { VocabulariesAPI } from '../services/vocabulariesService';
 const name = 'vocabularies';
 
 type TVocabulariesState = {
-  status: StateStatuses,
-  vocabularies: IVocabulary[],
-}
+  status: StateStatuses;
+  vocabularies: IVocabulary[];
+};
 
 const initialState: TVocabulariesState = {
   status: StateStatuses.IDLE,
@@ -22,7 +22,16 @@ export const fetchVocabularies = createAsyncThunk(
 
 export const postVocabularies = createAsyncThunk(
   `${name}/postVocabularies`,
-  async (vocabulary: INewVocabulary) => await VocabulariesAPI.postVocabulary(vocabulary),
+  async (vocabulary: INewVocabulary) =>
+    await VocabulariesAPI.postVocabulary(vocabulary),
+);
+
+export const deleteVocabulary = createAsyncThunk(
+  `${name}/deleteVocabulary`,
+  async (vocabularyId: number) => {
+    await VocabulariesAPI.deleteVocabulary(vocabularyId);
+    return { id: vocabularyId };
+  },
 );
 
 export const vocabulariesSlice = createSlice({
@@ -53,9 +62,25 @@ export const vocabulariesSlice = createSlice({
       .addCase(postVocabularies.rejected, (state) => {
         state.status = StateStatuses.ERROR;
       })
+      // deleteVocabulary
+      .addCase(deleteVocabulary.pending, (state) => {
+        state.status = StateStatuses.LOADING;
+      })
+      .addCase(deleteVocabulary.fulfilled, (state, action) => {
+        state.status = StateStatuses.IDLE;
+        const { id } = action.payload;
+        const index = state.vocabularies.findIndex((v) => v.id === id);
+        state.vocabularies = [
+          ...state.vocabularies.slice(0, index),
+          ...state.vocabularies.slice(index + 1),
+        ];
+        // TODO history.push(-1)
+      })
+      .addCase(deleteVocabulary.rejected, (state) => {
+        state.status = StateStatuses.ERROR;
+      })
       // default
-      .addDefaultCase(() => {
-      });
+      .addDefaultCase(() => {});
   },
 });
 

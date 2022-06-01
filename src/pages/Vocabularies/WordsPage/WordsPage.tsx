@@ -11,8 +11,10 @@ import { AddFAB } from '../../../components/AddFAB/AddFAB';
 import AppBars, { BarGuiding } from '../../../components/AppBars/AppBars';
 import { WordCardsList } from './components/WordCardsList';
 import { useHeight } from '../../../components/AddFAB/useHeight';
-import { MUI_SIZE_PX } from '../../../constants';
+import { MUI_SIZE_PX } from '../../../services/constants';
 import { Forms, FormState } from './components/Form/Forms';
+import { QuestionDialog } from '../../../components/Dialogs/QuestionDialog';
+import { deleteVocabulary } from '../../../store/vocabulariesSlice';
 
 type TWordsPageProps = {};
 
@@ -38,9 +40,10 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const { vocabularyId } = useParams();
 
   const [numVocabularyId] = useState<number>(vocabularyId ? +vocabularyId : 0);
-  //const [isAddFormOpened, setIsAddFormOpened] = useState(false);
   const [formState, setFormState] = useState<FormState>(FormState.CLOSED);
   const [curWord, setCurWord] = useState<IWord | null>(null);
+  const [isRemoveVocabularyModalOpened, setIsRemoveVocabularyModalOpened] =
+    useState<boolean>(false);
 
   const { ref: fabRef, height: fabHeight, other } = useHeight(['bottom']);
   const fabBottom = parseInt(other?.bottom ?? 16, 10);
@@ -78,6 +81,20 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
     setFormState(FormState.NEW);
   };
 
+  const handleRemoveVocabularyClicked = () => {
+    setIsRemoveVocabularyModalOpened(true);
+  };
+
+  const handleRemoveVocabularyClosed = () => {
+    setIsRemoveVocabularyModalOpened(false);
+  };
+
+  const handleRemoveVocabularyConfirmed = () => {
+    dispatch(deleteVocabulary(numVocabularyId));
+    handleRemoveVocabularyClosed();
+    //handleBackClick();
+  }
+
   const content = words.length ? (
     <WordCardsList
       words={words}
@@ -93,6 +110,12 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
       title={getPageName('name')}
       guiding={BarGuiding.back}
       onGuidingClick={handleBackClick}
+      menuItems={[
+        {
+          onClick: handleRemoveVocabularyClicked,
+          label: 'Remove',
+        },
+      ]}
     >
       {content}
       <AddFAB
@@ -105,6 +128,14 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
         wordToEdit={curWord}
         onClose={handleFormClosed}
         vocabularyId={numVocabularyId}
+      />
+      <QuestionDialog
+        onClose={handleRemoveVocabularyClosed}
+        onCancel={handleRemoveVocabularyClosed}
+        isOpened={isRemoveVocabularyModalOpened}
+        onOk={handleRemoveVocabularyConfirmed}
+        title={'Удаление словаря'}
+        description={'Вы уверены, что хотите удалить словарь?'}
       />
     </AppBars.Top>
   );

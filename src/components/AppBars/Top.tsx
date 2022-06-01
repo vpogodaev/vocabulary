@@ -1,6 +1,13 @@
 import React from 'react';
-import { AppBar, Box, styled, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  styled,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { BarGuiding, BarGuidingFactory } from './AppBars';
+import { BarMenuButton, TMenuItem } from './BarMenuButton';
 
 type TTopProps = {
   title?: string;
@@ -8,6 +15,7 @@ type TTopProps = {
   // TODO: make more elegant?
   guiding?: BarGuiding;
   onGuidingClick?: () => void;
+  menuItems?: TMenuItem[];
 };
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -17,6 +25,7 @@ export const Top: React.FC<TTopProps> = ({
   children,
   guiding,
   onGuidingClick,
+  menuItems,
 }) => {
   const titleLabel = title ? (
     <Typography
@@ -35,6 +44,10 @@ export const Top: React.FC<TTopProps> = ({
     />
   ) : null;
 
+  const menu = menuItems?.length ? (
+    <BarMenuButton menuItems={menuItems} />
+  ) : null;
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Box>
@@ -42,6 +55,7 @@ export const Top: React.FC<TTopProps> = ({
           <Toolbar>
             {guidingElement}
             {titleLabel}
+            {menu}
           </Toolbar>
         </AppBar>
         <Offset />

@@ -3,7 +3,10 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { fetchVocabularies, postVocabularies } from '../../../store/vocabulariesSlice';
+import {
+  fetchVocabularies,
+  postVocabularies,
+} from '../../../store/vocabulariesSlice';
 import { useHeight } from '../../../components/AddFAB/useHeight';
 
 import { AddFAB } from '../../../components/AddFAB/AddFAB';
@@ -18,13 +21,12 @@ type TVocabulariesPageProps = {};
 
 const NoVocabularies = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
-    <span>
-      No vocabularies found!
-    </span>
+    <span>No vocabularies found!</span>
   </Box>
 );
 
-const selectVocabularies = (state: RootState) => state.vocabularies.vocabularies;
+const selectVocabularies = (state: RootState) =>
+  state.vocabularies.vocabularies;
 
 const PAGE_NAME = 'Vocabularies';
 
@@ -54,27 +56,31 @@ export const VocabulariesPage: React.FC<TVocabulariesPageProps> = () => {
     setIsAddFormOpened(() => false);
   };
 
-  const getVocabulariesToRender = useMemo<TElementPropsWithId[]>(() => vocabularies.map((d) => (
-    {
-      primaryText: d.name,
-      secondaryText: d.description,
-      id: d.id.toString(),
-    }
-  )), [vocabularies]);
+  const getVocabulariesToRender = useMemo<TElementPropsWithId[]>(
+    () =>
+      !vocabularies?.length
+        ? []
+        : vocabularies.map((d) => ({
+            primaryText: d.name,
+            secondaryText: d.description,
+            id: d.id.toString(),
+          })),
+    [vocabularies],
+  );
 
   const handleElementClick = (element: TElementPropsWithId) => {
     const { id } = element;
     navigate(`${id}`);
   };
 
-  const content = vocabularies.length
-    ? (
-      <ElementsList
-        elements={getVocabulariesToRender}
-        onElementClick={handleElementClick}
-      />
-    )
-    : <NoVocabularies />;
+  const content = vocabularies.length ? (
+    <ElementsList
+      elements={getVocabulariesToRender}
+      onElementClick={handleElementClick}
+    />
+  ) : (
+    <NoVocabularies />
+  );
 
   return (
     <AppBars.Top title={PAGE_NAME}>
