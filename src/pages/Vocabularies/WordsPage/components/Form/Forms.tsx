@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IWord } from '../../../../../models/Vocabulary/IWord';
 import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
+import { DynamicForm } from '../../../../../components/Forms/DynamicForm/DynamicForm';
 
 export enum FormState {
   CLOSED,
@@ -18,27 +19,25 @@ type TFormProps = {
 
 export const Forms: React.FC<TFormProps> = ({
   state,
-  wordToEdit = null,
+  wordToEdit,
   onClose,
   vocabularyId,
-}) => {
-  const form = {
-    [FormState.NEW]: (
-      <NewWordForm
-        isOpened={state === FormState.NEW}
-        onClose={onClose}
-        vocabularyId={vocabularyId}
-      />
-    ),
-    [FormState.EDIT]: (
-      <EditWordForm
-        isOpened={state === FormState.EDIT}
-        onClose={onClose}
-        oldWord={wordToEdit as IWord}
-      />
-    ),
-    [FormState.CLOSED]: null,
-  };
-
-  return form[state];
-};
+}) => (
+  <>
+    <DynamicForm
+      isOpened={state === FormState.NEW}
+      onClose={onClose}
+      onSubmit={(e: any) => console.log('onSubmit', e)}
+    />
+    {/*<NewWordForm*/}
+    {/*  isOpened={state === FormState.NEW}*/}
+    {/*  onClose={onClose}*/}
+    {/*  vocabularyId={vocabularyId}*/}
+    {/*/>*/}
+    <EditWordForm
+      isOpened={state === FormState.EDIT}
+      onClose={onClose}
+      oldWord={(wordToEdit ?? {}) as IWord}
+    />
+  </>
+);
