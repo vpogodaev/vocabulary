@@ -1,19 +1,33 @@
 import {
-  FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  SxProps,
+  Theme,
 } from '@mui/material';
 import React from 'react';
 
 type TComboBoxProps = {
-  id: string,
-  labelId?: string,
-  label: string,
-  value: string,
-  onChange: (event: SelectChangeEvent, child?: React.ReactNode) => void,
-  items: { value: string | number, label: string }[],
+  id: string;
+  labelId?: string;
+  label: string;
+  value: string;
+  onChange: (event: SelectChangeEvent, child?: React.ReactNode) => void;
+  items: { value: string | number; label: string }[];
+  sx?: SxProps<Theme> | undefined;
 };
 
 export const ComboBox = ({
-  id, labelId, label, value, onChange, items,
+  id,
+  labelId,
+  label,
+  value,
+  onChange,
+  items,
+  sx,
 }: TComboBoxProps) => {
   labelId = labelId || `${id}-label`;
 
@@ -27,7 +41,7 @@ export const ComboBox = ({
   ));
 
   return (
-    <FormControl sx={{ minWidth: 120 }}>
+    <FormControl sx={sx ?? { minWidth: 120 }}>
       <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
       <Select
         labelId={labelId}

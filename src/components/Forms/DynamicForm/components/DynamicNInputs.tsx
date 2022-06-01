@@ -2,57 +2,48 @@ import React from 'react';
 import { OnInputChangeEvent } from '../../../../helpers/typeAbbreviations';
 import { NInputsBox } from './NInputsBox';
 
-type TDynamicNInputsProps = {
-  // inputInfos: [{ id: string; [key: string]: any }];
-  inputInfos: {
+export type InputInfo = {
+  name: string;
+  label: string;
+};
+
+type TDynamicNInputsProps<T extends { [key: string]: string }> = {
+  inputsData: ({
     id: string;
-    word: string;
-    translation: string;
-    description: string;
-  }[];
+  } & T)[];
+  inputsInfo: {
+    [k in keyof T]: InputInfo;
+  };
   onChange: (e: OnInputChangeEvent, index: number) => void;
   onRemoveClicked: (index: number) => void;
 };
 
-export const DynamicNInputs: React.FC<TDynamicNInputsProps> = ({
-  inputInfos,
+export const DynamicNInputs = <T extends { [key: string]: string }>({
+  inputsData,
+  inputsInfo,
   onChange,
   onRemoveClicked,
-}) => {
-  return (
-    <>
-      {inputInfos.map(({ id, word, translation, description }, i) => {
-        const info = [
-          {
-            value: word,
-            label: 'Word',
-            name: 'word',
-            onChange: (e: OnInputChangeEvent) => onChange(e, i),
-          },
-          {
-            value: description,
-            label: 'Description',
-            name: 'description',
-            onChange: (e: OnInputChangeEvent) => onChange(e, i),
-          },
-          {
-            value: translation,
-            label: 'Translation',
-            name: 'translation',
-            onChange: (e: OnInputChangeEvent) => onChange(e, i),
-          },
-        ];
+}: TDynamicNInputsProps<T>) => (
+  <>
+    {inputsData.map(({ id, ...rest }, i) => {
+      const inputFieldKeys = Object.keys(rest);
 
-        const onClick = i > 0 ? () => onRemoveClicked(i) : undefined;
+      const info = inputFieldKeys.map((key) => ({
+        value: rest[key],
+        name: inputsInfo[key].name,
+        label: inputsInfo[key].label,
+        onChange: (e: OnInputChangeEvent) => onChange(e, i),
+      }));
 
-        return (
-          <NInputsBox
-            key={id}
-            inputInfos={info}
-            onRemoveClicked={onClick}
-          />
-        );
-      })}
-    </>
-  );
-};
+      const onClick = i > 0 ? () => onRemoveClicked(i) : undefined;
+
+      return (
+        <NInputsBox
+          key={id}
+          inputInfos={info}
+          onRemoveClicked={onClick}
+        />
+      );
+    })}
+  </>
+);

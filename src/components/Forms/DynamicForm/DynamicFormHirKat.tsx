@@ -1,13 +1,14 @@
 import React, { FormEvent, useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { nanoid } from '@reduxjs/toolkit';
 import AddIcon from '@mui/icons-material/Add';
 import { SliderDialog } from '../../Dialogs/SliderDialog';
-import { INewWord } from '../../../models/Vocabulary/IWord';
+import { INewWord, PartsOfSpeech } from '../../../models/Vocabulary/IWord';
 import { OnInputChangeEvent } from '../../../helpers/typeAbbreviations';
 import { DynamicNInputs } from './components/DynamicNInputs';
+import { ComboBox } from '../../Inputs/ComboBox';
 
-type TDynamicFormProps = {
+type TDynamicFormHirKatProps = {
   formName?: string;
   isOpened: boolean;
   onClose: () => void;
@@ -28,21 +29,16 @@ const TEXT_TRANSLATE_ERROR = 'Enter at least one translate';
 const TEXT_CANCEL_BTN = 'Cancel';
 const TEXT_SUBMIT_BTN = 'Submit';
 
-type OnKunWordInfo = {
-  word: string;
+type TranslateWordInfo = {
   translation: string;
   description: string;
-}
+};
 
-type OnKunWord = {
+type TranslateWord = {
   id: string;
-} & OnKunWordInfo;
+} & TranslateWordInfo;
 
-const onKunInputsInfo = {
-  word: {
-    name: 'word',
-    label: 'Word',
-  },
+const translateWordInfo = {
   translation: {
     name: 'translation',
     label: 'Translation',
@@ -51,21 +47,24 @@ const onKunInputsInfo = {
     name: 'description',
     label: 'Description',
   },
-}
+};
 
-export const DynamicForm: React.FC<TDynamicFormProps> = ({
+const partsOfSpeech = Object.entries(PartsOfSpeech).map(([k, v]) => ({
+  value: k,
+  label: v.charAt(0).toUpperCase() + v.slice(1),
+}));
+
+export const DynamicFormHitKat: React.FC<TDynamicFormHirKatProps> = ({
   isOpened,
   onClose,
   formName = '',
   onSubmit,
 }) => {
   const [mainWord, setMainWord] = useState('');
-  const [onWords, setOnWords] = useState<OnKunWord[]>([
-    { id: nanoid(), word: '', translation: '', description: '' },
+  const [translates, setTranslates] = useState<TranslateWord[]>([
+    { id: nanoid(), translation: '', description: '' },
   ]);
-  const [kunWords, setKunWords] = useState<OnKunWord[]>([
-    { id: nanoid(), word: '', translation: '', description: '' },
-  ]);
+  const [partOfSpeech, setPartOfSpeech] = useState('');
   const [description, setDescription] = useState('');
 
   const handleTextFieldChange = (
@@ -76,37 +75,18 @@ export const DynamicForm: React.FC<TDynamicFormProps> = ({
     set(value);
   };
 
-  const handleOnChange = (e: OnInputChangeEvent, index: number) => {
+  const handleTranslationChange = (e: OnInputChangeEvent, index: number) => {
     const newWord = {
-      id: onWords[index].id,
-      word: onWords[index].word,
-      translation: onWords[index].translation,
-      description: onWords[index].description,
+      id: translates[index].id,
+      translation: translates[index].translation,
+      description: translates[index].description,
     };
-    newWord[e.target.name as 'word' | 'translation' | 'description'] =
-      e.target.value;
+    newWord[e.target.name as 'translation' | 'description'] = e.target.value;
 
-    setOnWords([
-      ...onWords.slice(0, index),
+    setTranslates([
+      ...translates.slice(0, index),
       newWord,
-      ...onWords.slice(index + 1),
-    ]);
-  };
-
-  const handleKunChange = (e: OnInputChangeEvent, index: number) => {
-    const newWord = {
-      id: kunWords[index].id,
-      word: kunWords[index].word,
-      translation: kunWords[index].translation,
-      description: kunWords[index].description,
-    };
-    newWord[e.target.name as 'word' | 'translation' | 'description'] =
-      e.target.value;
-
-    setKunWords([
-      ...kunWords.slice(0, index),
-      newWord,
-      ...kunWords.slice(index + 1),
+      ...translates.slice(index + 1),
     ]);
   };
 
@@ -116,28 +96,26 @@ export const DynamicForm: React.FC<TDynamicFormProps> = ({
 
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
+
+    console.log([mainWord, translates, partOfSpeech, description]);
   };
 
   const handleAddOnWordClicked = () => {
-    setOnWords([
-      ...onWords,
-      { id: nanoid(), word: '', translation: '', description: '' },
+    setTranslates([
+      ...translates,
+      { id: nanoid(), translation: '', description: '' },
     ]);
   };
 
   const handleRemoveOnWordClicked = (index: number) => {
-    setOnWords([...onWords.slice(0, index), ...onWords.slice(index + 1)]);
-  };
-
-  const handleAddKunWordClicked = () => {
-    setKunWords([
-      ...kunWords,
-      { id: nanoid(), word: '', translation: '', description: '' },
+    setTranslates([
+      ...translates.slice(0, index),
+      ...translates.slice(index + 1),
     ]);
   };
 
-  const handleRemoveKunWordClicked = (index: number) => {
-    setKunWords([...kunWords.slice(0, index), ...kunWords.slice(index + 1)]);
+  const handleComboboxChange = (e: SelectChangeEvent) => {
+    setPartOfSpeech(e.target.value);
   };
 
   const form = (
@@ -164,14 +142,14 @@ export const DynamicForm: React.FC<TDynamicFormProps> = ({
           component="h3"
           sx={{ mb: 1 }}
         >
-          On:
+          Translates:
         </Typography>
         <Box sx={{ display: 'grid', gap: 3, mb: 4 }}>
           <Box sx={{ display: 'grid', gap: 2 }}>
-            <DynamicNInputs<OnKunWordInfo>
-              inputsData={onWords}
-              inputsInfo={onKunInputsInfo}
-              onChange={handleOnChange}
+            <DynamicNInputs<TranslateWordInfo>
+              inputsData={translates}
+              inputsInfo={translateWordInfo}
+              onChange={handleTranslationChange}
               onRemoveClicked={handleRemoveOnWordClicked}
             />
           </Box>
@@ -185,31 +163,15 @@ export const DynamicForm: React.FC<TDynamicFormProps> = ({
         </Box>
       </Box>
 
-      <Box>
-        <Typography
-          variant="subtitle1"
-          component="h3"
-          sx={{ mb: 1 }}
-        >
-          Kun:
-        </Typography>
-        <Box sx={{ display: 'grid', gap: 3, mb: 4 }}>
-          <Box sx={{ display: 'grid', gap: 2 }}>
-            <DynamicNInputs<OnKunWordInfo>
-              inputsData={kunWords}
-              inputsInfo={onKunInputsInfo}
-              onChange={handleKunChange}
-              onRemoveClicked={handleRemoveKunWordClicked}
-            />
-          </Box>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            onClick={handleAddKunWordClicked}
-          >
-            Add
-          </Button>
-        </Box>
+      <Box sx={{ mb: 4 }}>
+        <ComboBox
+          id="_partOfSpeech"
+          value={partOfSpeech}
+          onChange={handleComboboxChange}
+          label="Part of Speech"
+          items={partsOfSpeech}
+          sx={{width: '100%'}}
+        />
       </Box>
 
       <Box>

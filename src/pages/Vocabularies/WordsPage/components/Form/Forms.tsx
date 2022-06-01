@@ -3,6 +3,7 @@ import { IWord } from '../../../../../models/Vocabulary/IWord';
 import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
 import { DynamicForm } from '../../../../../components/Forms/DynamicForm/DynamicForm';
+import { DynamicFormHitKat } from '../../../../../components/Forms/DynamicForm/DynamicFormHirKat';
 
 export enum FormState {
   CLOSED,
@@ -24,7 +25,12 @@ export const Forms: React.FC<TFormProps> = ({
   vocabularyId,
 }) => (
   <>
-    <DynamicForm
+    {/*<DynamicForm*/}
+    {/*  isOpened={state === FormState.NEW}*/}
+    {/*  onClose={onClose}*/}
+    {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
+    {/*/>*/}
+    <DynamicFormHitKat
       isOpened={state === FormState.NEW}
       onClose={onClose}
       onSubmit={(e: any) => console.log('onSubmit', e)}
