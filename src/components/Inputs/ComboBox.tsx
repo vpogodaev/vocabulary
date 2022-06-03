@@ -10,14 +10,24 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-type TComboBoxProps = {
+type ComboBoxItem = {
+  value: string | number;
+  label: string;
+};
+
+export type ComboBoxItems = ComboBoxItem[];
+
+export type TComboBoxProps = {
   id: string;
   labelId?: string;
   label: string;
   value: string;
   onChange: (event: SelectChangeEvent, child?: React.ReactNode) => void;
-  items: { value: string | number; label: string }[];
+  items: ComboBoxItems;
   sx?: SxProps<Theme> | undefined;
+  name?: string;
+  noneAvailable?: boolean;
+  noneTitle?: string;
 };
 
 export const ComboBox = ({
@@ -28,6 +38,9 @@ export const ComboBox = ({
   onChange,
   items,
   sx,
+  name,
+  noneAvailable,
+  noneTitle,
 }: TComboBoxProps) => {
   labelId = labelId || `${id}-label`;
 
@@ -40,6 +53,17 @@ export const ComboBox = ({
     </MenuItem>
   ));
 
+  if (noneAvailable) {
+    menuItems.unshift(
+      <MenuItem
+        key={`_none_${menuItems.length}`}
+        value=""
+      >
+        <em>{noneTitle ?? 'None'}</em>
+      </MenuItem>,
+    );
+  }
+
   return (
     <FormControl sx={sx ?? { minWidth: 120 }}>
       <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel>
@@ -49,6 +73,7 @@ export const ComboBox = ({
         value={value}
         label={label}
         onChange={onChange}
+        name={name}
       >
         {menuItems}
       </Select>

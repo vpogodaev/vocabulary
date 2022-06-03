@@ -4,11 +4,11 @@ import { nanoid } from '@reduxjs/toolkit';
 import AddIcon from '@mui/icons-material/Add';
 import { SliderDialog } from '../../Dialogs/SliderDialog';
 import { INewWord, PartsOfSpeech } from '../../../models/Vocabulary/IWord';
-import { OnInputChangeEvent } from '../../../helpers/typeAbbreviations';
-import { DynamicNInputs } from './components/DynamicNInputs';
+import { InputChangeEvent } from '../../../helpers/typeAbbreviations';
+import { NInputsList } from './components/NInputs/NInputsList';
 import { ComboBox } from '../../Inputs/ComboBox';
 
-type TDynamicFormHirKatProps = {
+type TDynamicFormKanaProps = {
   formName?: string;
   isOpened: boolean;
   onClose: () => void;
@@ -54,7 +54,7 @@ const partsOfSpeech = Object.entries(PartsOfSpeech).map(([k, v]) => ({
   label: v.charAt(0).toUpperCase() + v.slice(1),
 }));
 
-export const DynamicFormHitKat: React.FC<TDynamicFormHirKatProps> = ({
+export const DynamicFormKana: React.FC<TDynamicFormKanaProps> = ({
   isOpened,
   onClose,
   formName = '',
@@ -75,7 +75,7 @@ export const DynamicFormHitKat: React.FC<TDynamicFormHirKatProps> = ({
     set(value);
   };
 
-  const handleTranslationChange = (e: OnInputChangeEvent, index: number) => {
+  const handleTranslationChange = (e: InputChangeEvent, index: number) => {
     const newWord = {
       id: translates[index].id,
       translation: translates[index].translation,
@@ -146,9 +146,9 @@ export const DynamicFormHitKat: React.FC<TDynamicFormHirKatProps> = ({
         </Typography>
         <Box sx={{ display: 'grid', gap: 3, mb: 4 }}>
           <Box sx={{ display: 'grid', gap: 2 }}>
-            <DynamicNInputs<TranslateWordInfo>
-              inputsData={translates}
-              inputsInfo={translateWordInfo}
+            <NInputsList<TranslateWordInfo>
+              inputValues={translates}
+              inputInfos={translateWordInfo}
               onChange={handleTranslationChange}
               onRemoveClicked={handleRemoveOnWordClicked}
             />

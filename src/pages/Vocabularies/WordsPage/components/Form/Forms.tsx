@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { IWord } from '../../../../../models/Vocabulary/IWord';
 import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
+import { DynamicFormKanji } from '../../../../../components/Forms/DynamicForm/DynamicFormKanji';
+import { DynamicFormKana } from '../../../../../components/Forms/DynamicForm/DynamicFormKana';
 import { DynamicForm } from '../../../../../components/Forms/DynamicForm/DynamicForm';
-import { DynamicFormHitKat } from '../../../../../components/Forms/DynamicForm/DynamicFormHirKat';
+import { SliderDialog } from '../../../../../components/Dialogs/SliderDialog';
 
 export enum FormState {
   CLOSED,
@@ -25,16 +27,25 @@ export const Forms: React.FC<TFormProps> = ({
   vocabularyId,
 }) => (
   <>
-    {/*<DynamicForm*/}
+    {/*<DynamicFormKanji*/}
     {/*  isOpened={state === FormState.NEW}*/}
     {/*  onClose={onClose}*/}
     {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
     {/*/>*/}
-    <DynamicFormHitKat
+    {/*<DynamicFormHitKat*/}
+    {/*  isOpened={state === FormState.NEW}*/}
+    {/*  onClose={onClose}*/}
+    {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
+    {/*/>*/}
+
+    <SliderDialog
       isOpened={state === FormState.NEW}
-      onClose={onClose}
-      onSubmit={(e: any) => console.log('onSubmit', e)}
+      onCloseClick={onClose}
+      // title={formName}
+      title="Dynamic form"
+      content={<DynamicForm onSubmit={() => console.log('onSubmit')} />}
     />
+
     {/*<NewWordForm*/}
     {/*  isOpened={state === FormState.NEW}*/}
     {/*  onClose={onClose}*/}
