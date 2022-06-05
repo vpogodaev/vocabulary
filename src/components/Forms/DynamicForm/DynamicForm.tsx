@@ -313,7 +313,7 @@ export const DynamicForm = ({
 
       setState(newState);
     });
-  }, []);
+  }, [metaData]);
 
   const getElements = () =>
     state.map(({ id, value, setValue }, i) => {
@@ -354,7 +354,7 @@ export const DynamicForm = ({
               id={id}
               name={name}
               value={value as string}
-              label={label}
+              label={label ?? ''}
               onChange={(e) =>
                 handleComboBoxFieldChanged(e, (s) =>
                   (setValue as SetValue)(s, state, setState),

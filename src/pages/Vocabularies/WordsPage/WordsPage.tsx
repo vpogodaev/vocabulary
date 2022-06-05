@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 
-import { fetchWords } from '../../../store/wordsSlice';
+import { fetchWords, selectWords } from '../../../store/wordsSlice';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { RootState } from '../../../store/store';
 
@@ -14,7 +14,7 @@ import { useHeight } from '../../../components/AddFAB/useHeight';
 import { MUI_SIZE_PX } from '../../../services/constants';
 import { Forms, FormState } from './components/Form/Forms';
 import { QuestionDialog } from '../../../components/Dialogs/QuestionDialog';
-import { deleteVocabulary } from '../../../store/vocabulariesSlice';
+import { deleteVocabulary, fetchVocabulary, selectCurrentVocabulary } from '../../../store/vocabulariesSlice';
 
 type TWordsPageProps = {};
 
@@ -23,15 +23,13 @@ declare type TWordsProps = {
   onAddClicked: () => void;
 };
 
-const getPageName = (name: string) => `Vocabulary ${name}`;
+const getPageName = (name?: string) => `Vocabulary ${name}`;
 
 const NoWords = () => (
   <Box sx={{ height: '100%', pt: '40%', textAlign: 'center' }}>
     <span>No words found!</span>
   </Box>
 );
-
-const selectWords = (state: RootState) => state.words.words;
 
 export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   const dispatch = useAppDispatch();
@@ -53,12 +51,15 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   );
 
   const words = useAppSelector(selectWords);
+  const currentVocabulary = useAppSelector(selectCurrentVocabulary);
 
   useEffect(() => {
     if (!vocabularyId) {
       console.error('No vocabulary id');
     }
-  }, []);
+
+    dispatch(fetchVocabulary(numVocabularyId));
+  }, [vocabularyId]);
 
   useEffect(() => {
     dispatch(fetchWords(numVocabularyId));
@@ -78,7 +79,7 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
   };
 
   const handleAddBtnClicked = () => {
-    setFormState(FormState.NEW);
+    setFormState(FormState.CREATE);
   };
 
   const handleRemoveVocabularyClicked = () => {
@@ -107,7 +108,7 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
 
   return (
     <AppBars.Top
-      title={getPageName('name')}
+      title={getPageName(currentVocabulary?.name)}
       guiding={BarGuiding.back}
       onGuidingClick={handleBackClick}
       menuItems={[
@@ -127,7 +128,6 @@ export const WordsPage: React.FC<TWordsPageProps> = ({}) => {
         state={formState}
         wordToEdit={curWord}
         onClose={handleFormClosed}
-        vocabularyId={numVocabularyId}
       />
       <QuestionDialog
         onClose={handleRemoveVocabularyClosed}

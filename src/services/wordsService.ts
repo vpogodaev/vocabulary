@@ -1,20 +1,21 @@
-import { INewWord, IWord } from '../models/Vocabulary/IWord';
-import { ORIGIN } from './constants';
-import { httpFetch, Methods } from './http';
+import { VocabularyBaseLanguage } from '../models/Vocabulary/Language';
+import { WordType } from '../models/Word/Word';
 
-const route = 'words';
-
-export const getWords = (vocabularyId: number): Promise<IWord[]> =>
-  httpFetch<IWord[]>(`${ORIGIN}/${route}?vocabularyId=${vocabularyId}`);
-
-export const postWord = (word: INewWord): Promise<IWord> =>
-  httpFetch<IWord>(`${ORIGIN}/${route}`, word, Methods.POST);
-
-export const putWord = (word: IWord): Promise<IWord> =>
-  httpFetch<IWord>(`${ORIGIN}/${route}/${word.id}`, word, Methods.PUT);
-
-export const WordsAPI = {
-  getWords,
-  postWord,
-  putWord,
+const langTypes = {
+  [VocabularyBaseLanguage.en]: [WordType.enCommon],
+  [VocabularyBaseLanguage.jp]: [
+    WordType.jpKanji,
+    WordType.jpKana,
+    WordType.jpJukungoOkurigana,
+  ],
 };
+
+export const getWordTypes = (baseLang: VocabularyBaseLanguage) => langTypes[baseLang];
+
+const wordLabels = {
+  [WordType.enCommon]: '',
+  [WordType.jpKanji]: 'Kanji',
+  [WordType.jpKana]: 'Kana',
+  [WordType.jpJukungoOkurigana]: 'Jukungo / Okurigana',
+}
+export const getWordTypeLabel = (type: WordType) => wordLabels[type];

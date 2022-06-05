@@ -1,5 +1,4 @@
 export enum PartsOfSpeech {
-  empty = 'empty',
   noun = 'noun',
   verb = 'verb',
   adjective = 'adjective',
@@ -18,7 +17,7 @@ interface IWordBase {
   mainWord?: string;
   secondaryWords?: TWordValue[];
   translates: TWordValue[];
-  partOfSpeech: PartsOfSpeech;
+  partOfSpeech?: PartsOfSpeech;
   description?: string;
 }
 

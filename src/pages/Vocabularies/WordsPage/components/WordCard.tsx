@@ -133,7 +133,7 @@ export const WordCard: React.FC<TWordCardProps> = ({ word, onEditClicked }) => {
             words={word.translates}
             title={TEXT_TRANSLATES}
           />
-          {word.partOfSpeech !== PartsOfSpeech.empty && (
+          {word.partOfSpeech && (
             <>
               <Typography
                 variant="h6"

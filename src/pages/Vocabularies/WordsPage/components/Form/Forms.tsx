@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { IWord, PartsOfSpeech } from '../../../../../models/Vocabulary/IWord';
-import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
 import { DynamicFormKanji } from '../../../../../components/Forms/DynamicForm/DynamicFormKanji';
 import { DynamicFormKana } from '../../../../../components/Forms/DynamicForm/DynamicFormKana';
@@ -17,10 +16,11 @@ import {
   getTextBoxProps,
 } from '../../../../../components/Forms/DynamicForm/services/dynamicFormPropsFactory';
 import { Button } from '@mui/material';
+import { CreateWordForm } from './CreateWordForm';
 
 export enum FormState {
   CLOSED,
-  NEW,
+  CREATE,
   EDIT,
 }
 
@@ -28,14 +28,14 @@ type TFormProps = {
   state: FormState;
   wordToEdit: IWord | null;
   onClose: () => void;
-  vocabularyId: number;
+  //vocabularyId: number;
 };
 
 export const Forms: React.FC<TFormProps> = ({
   state,
   wordToEdit,
   onClose,
-  vocabularyId,
+  //vocabularyId,
 }) => {
   const textBoxProps = getTextBoxProps({
     id: 'kanjiInput',
@@ -129,39 +129,39 @@ export const Forms: React.FC<TFormProps> = ({
       {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
       {/*/>*/}
 
-      <SliderDialog
-        isOpened={state === FormState.NEW}
-        onCloseClick={onClose}
-        // title={formName}
-        title="Dynamic form"
-        // todo: metadata functions should be in useCallback or use constant (check what is better)
-        content={
-          <DynamicForm
-            onSubmit={handleFormSubmit}
-            metaData={[
-              textBoxProps.metadata,
-              textBox2Props.metadata,
-              textAreaProps.metadata,
-              comboBoxProps.metadata,
-              nInputsProps.metadata,
-            ]}
-            initValues={[
-              textBoxProps.initValue,
-              textBox2Props.initValue,
-              textAreaProps.initValue,
-              comboBoxProps.initValue,
-              nInputsProps.initValue,
-            ]}
-          />
-        }
-        actions={actions}
-      />
-
-      {/*<NewWordForm*/}
+      {/*<SliderDialog*/}
       {/*  isOpened={state === FormState.NEW}*/}
-      {/*  onClose={onClose}*/}
-      {/*  vocabularyId={vocabularyId}*/}
+      {/*  onCloseClick={onClose}*/}
+      {/*  // title={formName}*/}
+      {/*  title="Dynamic form"*/}
+      {/*  // todo: metadata functions should be in useCallback or use constant (check what is better)*/}
+      {/*  content={*/}
+      {/*    <DynamicForm*/}
+      {/*      onSubmit={handleFormSubmit}*/}
+      {/*      metaData={[*/}
+      {/*        textBoxProps.metadata,*/}
+      {/*        textBox2Props.metadata,*/}
+      {/*        textAreaProps.metadata,*/}
+      {/*        comboBoxProps.metadata,*/}
+      {/*        nInputsProps.metadata,*/}
+      {/*      ]}*/}
+      {/*      initValues={[*/}
+      {/*        textBoxProps.initValue,*/}
+      {/*        textBox2Props.initValue,*/}
+      {/*        textAreaProps.initValue,*/}
+      {/*        comboBoxProps.initValue,*/}
+      {/*        nInputsProps.initValue,*/}
+      {/*      ]}*/}
+      {/*    />*/}
+      {/*  }*/}
+      {/*  actions={actions}*/}
       {/*/>*/}
+
+      <CreateWordForm
+        isOpened={state === FormState.CREATE}
+        onClose={onClose}
+        //vocabularyId={vocabularyId}
+      />
       <EditWordForm
         isOpened={state === FormState.EDIT}
         onClose={onClose}

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   fetchVocabularies,
-  postVocabularies,
+  postVocabulary,
 } from '../../../store/vocabulariesSlice';
 import { useHeight } from '../../../components/AddFAB/useHeight';
 
@@ -45,7 +45,7 @@ export const VocabulariesPage: React.FC<TVocabulariesPageProps> = () => {
   }, []);
 
   const handleFormSubmit = (vocabulary: INewVocabulary) => {
-    dispatch(postVocabularies(vocabulary));
+    dispatch(postVocabulary(vocabulary));
   };
 
   const handleNewVocabularyClicked = () => {

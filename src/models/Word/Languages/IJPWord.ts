@@ -4,7 +4,7 @@ import {
   IWordWithPartOfSpeech,
   IWordWithTranscription,
   IWordWithTranslates,
-} from '../IWord';
+} from '../Word';
 
 export type TKanjiTranscription = {
   value: string;

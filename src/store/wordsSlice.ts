@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { INewWord, IWord } from '../models/Vocabulary/IWord';
 import { StateStatuses } from './types';
-import { WordsAPI } from '../services/wordsService';
+import { WordsAPI } from '../services/wordsAPI';
+import { RootState } from './store';
 
 const name = 'words';
 
@@ -73,3 +74,6 @@ export const wordsSlice = createSlice({
 });
 
 export default wordsSlice.reducer;
+
+// selectors
+export const selectWords = (state: RootState) => state.words.words;

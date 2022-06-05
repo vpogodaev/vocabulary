@@ -11,11 +11,11 @@ export enum MetadataType {
 export type MetadataBase = {
   id: string;
   name: string;
-  label: string;
+  label?: string;
   required?: boolean
 };
 
-type Metadata = { type: MetadataType } & MetadataBase;
+export type Metadata = { type: MetadataType } & MetadataBase;
 
 export type TextInputMetadata = Metadata;
 

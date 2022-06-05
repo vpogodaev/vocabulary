@@ -1,27 +1,36 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { StateStatuses } from './types';
 import { IVocabulary, INewVocabulary } from '../models/Vocabulary/IVocabulary';
-import { VocabulariesAPI } from '../services/vocabulariesService';
+import { VocabulariesAPI } from '../services/vocabulariesAPI';
+import { RootState } from './store';
 
 const name = 'vocabularies';
 
 type TVocabulariesState = {
   status: StateStatuses;
   vocabularies: IVocabulary[];
+  currentVocabulary?: IVocabulary;
 };
 
 const initialState: TVocabulariesState = {
   status: StateStatuses.IDLE,
   vocabularies: [],
+  currentVocabulary: undefined,
 };
 
 export const fetchVocabularies = createAsyncThunk(
   `${name}/fetchVocabularies`,
-  async () => await VocabulariesAPI.getVocabularies(),
+  async () => await VocabulariesAPI.fetchVocabularies(),
 );
 
-export const postVocabularies = createAsyncThunk(
-  `${name}/postVocabularies`,
+export const fetchVocabulary = createAsyncThunk(
+  `${name}/fetchVocabulary`,
+  async (vocabularyId: number) =>
+    await VocabulariesAPI.fetchVocabulary(vocabularyId),
+);
+
+export const postVocabulary = createAsyncThunk(
+  `${name}/postVocabulary`,
   async (vocabulary: INewVocabulary) =>
     await VocabulariesAPI.postVocabulary(vocabulary),
 );
@@ -51,15 +60,26 @@ export const vocabulariesSlice = createSlice({
       .addCase(fetchVocabularies.rejected, (state) => {
         state.status = StateStatuses.ERROR;
       })
-      // postVocabularies
-      .addCase(postVocabularies.pending, (state) => {
+      // fetchVocabulary
+      .addCase(fetchVocabulary.pending, (state) => {
         state.status = StateStatuses.LOADING;
       })
-      .addCase(postVocabularies.fulfilled, (state, action) => {
+      .addCase(fetchVocabulary.fulfilled, (state, action) => {
+        state.status = StateStatuses.IDLE;
+        state.currentVocabulary = action.payload;
+      })
+      .addCase(fetchVocabulary.rejected, (state) => {
+        state.status = StateStatuses.ERROR;
+      })
+      // postVocabulary
+      .addCase(postVocabulary.pending, (state) => {
+        state.status = StateStatuses.LOADING;
+      })
+      .addCase(postVocabulary.fulfilled, (state, action) => {
         state.status = StateStatuses.IDLE;
         state.vocabularies.push(action.payload);
       })
-      .addCase(postVocabularies.rejected, (state) => {
+      .addCase(postVocabulary.rejected, (state) => {
         state.status = StateStatuses.ERROR;
       })
       // deleteVocabulary
@@ -85,3 +105,7 @@ export const vocabulariesSlice = createSlice({
 });
 
 export default vocabulariesSlice.reducer;
+
+// selectors
+export const selectCurrentVocabulary = (state: RootState) =>
+  state.vocabularies.currentVocabulary;
