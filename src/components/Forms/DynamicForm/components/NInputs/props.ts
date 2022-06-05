@@ -15,7 +15,7 @@ export type InputProps = {
 
 export type InputValue<T extends KeysWithStringValues> = {
   id: string;
-} & KeysWithStringValues;
+} & T;
 /**
  * Values for inputs with input block id
  */

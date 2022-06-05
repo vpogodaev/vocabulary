@@ -4,7 +4,10 @@ import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
 import { DynamicFormKanji } from '../../../../../components/Forms/DynamicForm/DynamicFormKanji';
 import { DynamicFormKana } from '../../../../../components/Forms/DynamicForm/DynamicFormKana';
-import { DynamicForm } from '../../../../../components/Forms/DynamicForm/DynamicForm';
+import {
+  DynamicForm,
+  FormSubmitResult,
+} from '../../../../../components/Forms/DynamicForm/DynamicForm';
 import { SliderDialog } from '../../../../../components/Dialogs/SliderDialog';
 import { exampleMetaData } from '../../../../../components/Forms/DynamicForm/services/metadataFactory';
 import {
@@ -13,6 +16,7 @@ import {
   getTextAreaProps,
   getTextBoxProps,
 } from '../../../../../components/Forms/DynamicForm/services/dynamicFormPropsFactory';
+import { Button } from '@mui/material';
 
 export enum FormState {
   CLOSED,
@@ -90,6 +94,22 @@ export const Forms: React.FC<TFormProps> = ({
     ],
   });
 
+  const actions = (
+    <>
+      <Button onClick={onClose}>Cancel</Button>
+      <Button
+        type="submit"
+        form="wordInputForm"
+      >
+        Create
+      </Button>
+    </>
+  );
+
+  const handleFormSubmit = (result: FormSubmitResult) => {
+    console.log('handleFormSubmit', result);
+  };
+
   return (
     <>
       {/*<DynamicFormKanji*/}
@@ -111,7 +131,7 @@ export const Forms: React.FC<TFormProps> = ({
         // todo: metadata functions should be in useCallback or use constant (check what is better)
         content={
           <DynamicForm
-            onSubmit={() => console.log('onSubmit')}
+            onSubmit={handleFormSubmit}
             metaData={[
               textBoxProps.metadata,
               textBox2Props.metadata,
@@ -128,6 +148,7 @@ export const Forms: React.FC<TFormProps> = ({
             ]}
           />
         }
+        actions={actions}
       />
 
       {/*<NewWordForm*/}

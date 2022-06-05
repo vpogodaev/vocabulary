@@ -21,8 +21,13 @@ import {
   TextInputMetadata,
 } from './services/metadataTypes';
 
+export type FormSubmitResult = {
+  id: string;
+  value: string | KeysWithStringValues[];
+}[];
+
 type TDynamicFormProps = {
-  onSubmit: () => void;
+  onSubmit: (result: FormSubmitResult) => void;
   metaData: (TextInputMetadata | ComboBoxMetadata | NInputsMetadata)[];
   initValues: (string | KeysWithStringValues[] | undefined)[];
 };
@@ -49,6 +54,7 @@ type State = {
   id: string;
   value: string | InputValues<KeysWithStringValues>;
   setValue: SetValue | SetNInputsValue;
+  type: MetadataType;
 };
 
 const getOneNewValueForNInputs = (
@@ -86,7 +92,20 @@ export const DynamicForm = ({
   const [state, setState] = useState<State[]>([]);
 
   const handleSubmitForm = (e: FormEvent) => {
-    onSubmit();
+    e.preventDefault();
+
+    const result = state.map(({ id, type, ...rest }) => {
+      const value =
+        type !== MetadataType.nInputs
+          ? rest.value
+          : (rest.value as InputValues<KeysWithStringValues>).map(
+              ({ id, ...restValues }) => ({ ...restValues }),
+            );
+
+      return { id, value };
+    });
+
+    onSubmit(result);
   };
 
   const handleTextFieldChanged = (
@@ -175,6 +194,7 @@ export const DynamicForm = ({
                 id,
                 value,
                 setValue,
+                type,
               };
 
               setState(() => [
@@ -187,6 +207,7 @@ export const DynamicForm = ({
               id,
               value: (initValues[i] as string) ?? '',
               setValue,
+              type,
             });
           }
           break;
@@ -205,6 +226,7 @@ export const DynamicForm = ({
                 id,
                 value,
                 setValue,
+                type,
               };
 
               setState(() => [
@@ -221,6 +243,7 @@ export const DynamicForm = ({
                 (rest as ComboBoxMetadata).defaultElement ??
                 '',
               setValue,
+              type,
             });
           }
           break;
@@ -261,6 +284,7 @@ export const DynamicForm = ({
               id,
               value,
               setValue,
+              type,
             });
           }
           break;
