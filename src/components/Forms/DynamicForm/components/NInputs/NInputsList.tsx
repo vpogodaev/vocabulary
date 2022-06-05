@@ -11,6 +11,7 @@ type TNInputsListProps<T extends KeysWithStringValues> = {
   inputInfos: InputInfos;
   onChange: (e: InputChangeEvent, index: number, inputName: string) => void;
   onRemoveClicked: (index: number) => void;
+  required?: boolean;
 };
 
 /**
@@ -21,6 +22,7 @@ export const NInputsList = <T extends KeysWithStringValues>({
   inputInfos,
   onChange,
   onRemoveClicked,
+  required,
 }: TNInputsListProps<T>) => (
   <>
     {inputValues.map(({ id, ...rest }, i) => {
@@ -30,6 +32,7 @@ export const NInputsList = <T extends KeysWithStringValues>({
         value: rest[key],
         name: inputInfos[key].name,
         label: inputInfos[key].label,
+        required: inputInfos[key].required && required,
         onChange: (e: InputChangeEvent) => onChange(e, i, key),
       }));
 

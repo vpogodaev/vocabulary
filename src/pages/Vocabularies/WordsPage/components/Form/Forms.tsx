@@ -41,7 +41,8 @@ export const Forms: React.FC<TFormProps> = ({
     id: 'kanjiInput',
     name: 'kanji',
     label: 'Kanji',
-    initValue: 'Test',
+    required: false,
+    //initValue: 'Test',
   });
   const textBox2Props = getTextBoxProps({
     id: 'kanjiInput2',
@@ -54,6 +55,7 @@ export const Forms: React.FC<TFormProps> = ({
     name: 'kanji',
     label: 'Kanji',
     initValue: 'Test',
+    required: true,
   });
   const comboBoxProps = getComboBoxProps({
     id: 'partOfSpeechComboBox',
@@ -63,16 +65,20 @@ export const Forms: React.FC<TFormProps> = ({
       value: k,
       label: v.charAt(0).toUpperCase() + v.slice(1),
     })),
-    initValue: 'noun',
+    noneAvailable: false,
+    //initValue: 'noun',
+    //required: true,
   });
   const nInputsProps = getNInputsProps({
     id: 'onWordsNInputs',
     name: 'onWords',
     label: 'On:',
+    required: true,
     items: {
       word: {
         name: 'word',
         label: 'Word',
+        required: true,
       },
       translation: {
         name: 'translation',
@@ -85,12 +91,12 @@ export const Forms: React.FC<TFormProps> = ({
     },
     initValue: [
       {
-        word: 'test',
+        word: '',
       },
-      {
-        word: 'test2',
-        description: 'test212',
-      },
+      // {
+      //   word: 'test2',
+      //   description: 'test212',
+      // },
     ],
   });
 

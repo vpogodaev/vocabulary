@@ -28,6 +28,7 @@ export type TComboBoxProps = {
   name?: string;
   noneAvailable?: boolean;
   noneTitle?: string;
+  [x: string]: any; // TODO: is there better solution?
 };
 
 export const ComboBox = ({
@@ -41,6 +42,7 @@ export const ComboBox = ({
   name,
   noneAvailable,
   noneTitle,
+  ...rest
 }: TComboBoxProps) => {
   labelId = labelId || `${id}-label`;
 
@@ -74,6 +76,7 @@ export const ComboBox = ({
         label={label}
         onChange={onChange}
         name={name}
+        {...rest}
       >
         {menuItems}
       </Select>

@@ -11,6 +11,7 @@ export type InputProps = {
   label: string;
   name: string;
   onChange: (value: InputChangeEvent) => void;
+  required?: boolean;
 };
 
 export type InputValue<T extends KeysWithStringValues> = {
@@ -27,6 +28,7 @@ export type InputValues<T extends KeysWithStringValues> = InputValue<T>[];
 export type InputInfo = {
   name: string;
   label: string;
+  required?: boolean;
 };
 
 /**

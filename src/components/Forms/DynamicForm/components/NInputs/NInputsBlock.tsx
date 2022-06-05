@@ -16,8 +16,9 @@ type TNInputsBlockProps<T extends KeysWithStringValues> = {
   onChange: (e: InputChangeEvent, index: number, inputName: string) => void;
   onRemoveClicked: (index: number) => void;
   // If callback not passed, Add button will not be added
-  onAddClicked?: (e: any) => void;
+  onAddClicked?: () => void;
   addLabel?: string;
+  required?: boolean;
 };
 
 /**
@@ -31,6 +32,7 @@ export const NInputsBlock = <T extends KeysWithStringValues>({
   onRemoveClicked,
   onAddClicked,
   addLabel,
+  required
 }: TNInputsBlockProps<T>) => (
   <BoxField title={title}>
     <Box sx={{ display: 'grid', gap: 3, mb: 4 }}>
@@ -40,6 +42,7 @@ export const NInputsBlock = <T extends KeysWithStringValues>({
           inputInfos={inputInfos}
           onChange={onChange}
           onRemoveClicked={onRemoveClicked}
+          required={required}
         />
       </Box>
       <Button

@@ -19,7 +19,7 @@ export const NInputs: React.FC<TNInputsProps> = ({
   inputsData,
   onRemoveClicked,
 }) => {
-  const inputs = inputsData.map(({ value, label, name, onChange }, i) => (
+  const inputs = inputsData.map(({ value, label, name, onChange, required }, i) => (
     <TextField
       key={i}
       sx={{ width: WIDTH }}
@@ -27,6 +27,7 @@ export const NInputs: React.FC<TNInputsProps> = ({
       name={name}
       label={label}
       onChange={onChange}
+      required={required}
     />
   ));
 

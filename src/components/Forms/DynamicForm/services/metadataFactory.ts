@@ -13,22 +13,26 @@ export const getTextBoxMD = ({
   id,
   name,
   label,
+  required,
 }: MetadataBase): TextInputMetadata => ({
   type: MetadataType.textBox,
   id,
   name,
   label,
+  required,
 });
 
 export const getTextAreaMD = ({
   id,
   name,
   label,
+  required,
 }: MetadataBase): TextInputMetadata => ({
   type: MetadataType.textArea,
   id,
   name,
   label,
+  required,
 });
 
 export const getComboBoxMD = ({
@@ -37,6 +41,7 @@ export const getComboBoxMD = ({
   label,
   items,
   defaultElement,
+  required,
 }: MetadataBase & ComboBoxSpecMetadata): ComboBoxMetadata => ({
   type: MetadataType.comboBox,
   id,
@@ -44,6 +49,7 @@ export const getComboBoxMD = ({
   label,
   items,
   defaultElement,
+  required,
 });
 
 export const getNInputsMD = ({
@@ -51,12 +57,14 @@ export const getNInputsMD = ({
   name,
   label,
   items,
+  required,
 }: MetadataBase & NInputsSpecMetadata): NInputsMetadata => ({
   type: MetadataType.nInputs,
   id,
   name,
   label,
   items,
+  required,
 });
 
 export const exampleMetaData = (): (

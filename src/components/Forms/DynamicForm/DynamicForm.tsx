@@ -94,15 +94,34 @@ export const DynamicForm = ({
   const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
-    const result = state.map(({ id, type, ...rest }) => {
-      const value =
-        type !== MetadataType.nInputs
-          ? rest.value
-          : (rest.value as InputValues<KeysWithStringValues>).map(
-              ({ id, ...restValues }) => ({ ...restValues }),
+    const result: FormSubmitResult = [];
+    state.forEach(({ id, type, ...rest }) => {
+      let value: string | KeysWithStringValues[];
+
+      if (type !== MetadataType.nInputs) {
+        value = rest.value;
+      } else {
+        value = [];
+        (rest.value as InputValues<KeysWithStringValues>).forEach(
+          ({ id, ...restValues }, i) => {
+            const values = Object.keys(restValues).reduce(
+              (p, c) => p + restValues[c],
+              '',
             );
 
-      return { id, value };
+            if (
+              values ||
+              (!value.length &&
+                (rest.value as InputValues<KeysWithStringValues>).length ===
+                  i + 1)
+            ) {
+              (value as KeysWithStringValues[]).push({ ...restValues });
+            }
+          },
+        );
+      }
+
+      result.push({ id, value });
     });
 
     onSubmit(result);
@@ -302,7 +321,7 @@ export const DynamicForm = ({
       if (!meta) {
         return null;
       }
-      const { type, name, label } = meta;
+      const { type, name, label, required } = meta;
 
       switch (type) {
         case MetadataType.textBox:
@@ -315,7 +334,8 @@ export const DynamicForm = ({
               value={value as string}
               label={label}
               multiline={type === MetadataType.textArea}
-              onTextChanged={(e) =>
+              required={required}
+              onChange={(e) =>
                 handleTextFieldChanged(e, (s) =>
                   (setValue as SetValue)(s, state, setState),
                 )
@@ -327,7 +347,7 @@ export const DynamicForm = ({
           if (!('items' in meta)) {
             return null;
           }
-          const { items } = meta as ComboBoxMetadata;
+          const { items, noneAvailable } = meta as ComboBoxMetadata;
           return (
             <ComboBoxField
               key={id}
@@ -341,7 +361,8 @@ export const DynamicForm = ({
                 )
               }
               items={items}
-              noneAvailable
+              noneAvailable={noneAvailable}
+              required={required}
             />
           );
         }
@@ -364,6 +385,7 @@ export const DynamicForm = ({
               }
               onRemoveClicked={(i) => handleNInputRemoveClicked(id, i)}
               onAddClicked={() => handleNInputAddClicked(id)}
+              required={required}
             />
           );
         }

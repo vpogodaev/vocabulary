@@ -19,8 +19,9 @@ export const getTextBoxProps = ({
   name,
   label,
   initValue,
+  required,
 }: MetadataBase & InitValue) => ({
-  metadata: getTextBoxMD({ id, name, label }),
+  metadata: getTextBoxMD({ id, name, label, required }),
   initValue,
 });
 
@@ -29,8 +30,9 @@ export const getTextAreaProps = ({
   name,
   label,
   initValue,
+  required,
 }: MetadataBase & InitValue) => ({
-  metadata: getTextAreaMD({ id, name, label }),
+  metadata: getTextAreaMD({ id, name, label, required }),
   initValue,
 });
 
@@ -41,8 +43,9 @@ export const getComboBoxProps = ({
   initValue,
   items,
   defaultElement,
+  required,
 }: MetadataBase & ComboBoxSpecMetadata & InitValue) => ({
-  metadata: getComboBoxMD({ id, name, label, items, defaultElement }),
+  metadata: getComboBoxMD({ id, name, label, items, defaultElement, required }),
   initValue,
 });
 
@@ -52,7 +55,8 @@ export const getNInputsProps = ({
   label,
   items,
   initValue,
+  required,
 }: MetadataBase & NInputsSpecMetadata & InitValueNInputs) => ({
-  metadata: getNInputsMD({ id, name, label, items }),
+  metadata: getNInputsMD({ id, name, label, items, required }),
   initValue,
 });
