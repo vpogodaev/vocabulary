@@ -8,7 +8,7 @@ import { InputInfos, InputValues } from './props';
 
 type TNInputsListProps<T extends KeysWithStringValues> = {
   inputValues: InputValues<T>;
-  inputInfos: InputInfos<T>;
+  inputInfos: InputInfos;
   onChange: (e: InputChangeEvent, index: number, inputName: string) => void;
   onRemoveClicked: (index: number) => void;
 };

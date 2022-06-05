@@ -12,7 +12,7 @@ import { InputInfos, InputValues } from './props';
 type TNInputsBlockProps<T extends KeysWithStringValues> = {
   title?: string;
   inputValues: InputValues<T>;
-  inputInfos: InputInfos<T>;
+  inputInfos: InputInfos;
   onChange: (e: InputChangeEvent, index: number, inputName: string) => void;
   onRemoveClicked: (index: number) => void;
   // If callback not passed, Add button will not be added

@@ -15,7 +15,7 @@ export type InputProps = {
 
 export type InputValue<T extends KeysWithStringValues> = {
   id: string;
-} & T;
+} & KeysWithStringValues;
 /**
  * Values for inputs with input block id
  */
@@ -32,6 +32,6 @@ export type InputInfo = {
 /**
  * {@link InputInfo} for several inputs
  */
-export type InputInfos<T> = {
-  [k in keyof T]: InputInfo;
+export type InputInfos = {
+  [k in keyof KeysWithStringValues]: InputInfo;
 };

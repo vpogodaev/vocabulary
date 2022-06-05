@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { IWord } from '../../../../../models/Vocabulary/IWord';
+import { IWord, PartsOfSpeech } from '../../../../../models/Vocabulary/IWord';
 import { NewWordForm } from './NewWordForm';
 import { EditWordForm } from './EditWordForm';
 import { DynamicFormKanji } from '../../../../../components/Forms/DynamicForm/DynamicFormKanji';
 import { DynamicFormKana } from '../../../../../components/Forms/DynamicForm/DynamicFormKana';
 import { DynamicForm } from '../../../../../components/Forms/DynamicForm/DynamicForm';
 import { SliderDialog } from '../../../../../components/Dialogs/SliderDialog';
+import { exampleMetaData } from '../../../../../components/Forms/DynamicForm/services/metadataFactory';
+import {
+  getComboBoxProps,
+  getNInputsProps,
+  getTextAreaProps,
+  getTextBoxProps,
+} from '../../../../../components/Forms/DynamicForm/services/dynamicFormPropsFactory';
 
 export enum FormState {
   CLOSED,
@@ -25,36 +32,114 @@ export const Forms: React.FC<TFormProps> = ({
   wordToEdit,
   onClose,
   vocabularyId,
-}) => (
-  <>
-    {/*<DynamicFormKanji*/}
-    {/*  isOpened={state === FormState.NEW}*/}
-    {/*  onClose={onClose}*/}
-    {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
-    {/*/>*/}
-    {/*<DynamicFormHitKat*/}
-    {/*  isOpened={state === FormState.NEW}*/}
-    {/*  onClose={onClose}*/}
-    {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
-    {/*/>*/}
+}) => {
+  const textBoxProps = getTextBoxProps({
+    id: 'kanjiInput',
+    name: 'kanji',
+    label: 'Kanji',
+    initValue: 'Test',
+  });
+  const textBox2Props = getTextBoxProps({
+    id: 'kanjiInput2',
+    name: 'kanji',
+    label: 'Kanji',
+    initValue: 'Test',
+  });
+  const textAreaProps = getTextAreaProps({
+    id: 'kanjiTextArea',
+    name: 'kanji',
+    label: 'Kanji',
+    initValue: 'Test',
+  });
+  const comboBoxProps = getComboBoxProps({
+    id: 'partOfSpeechComboBox',
+    name: 'partOfSpeech',
+    label: 'Part Of Speech',
+    items: Object.entries(PartsOfSpeech).map(([k, v]) => ({
+      value: k,
+      label: v.charAt(0).toUpperCase() + v.slice(1),
+    })),
+    initValue: 'noun',
+  });
+  const nInputsProps = getNInputsProps({
+    id: 'onWordsNInputs',
+    name: 'onWords',
+    label: 'On:',
+    items: {
+      word: {
+        name: 'word',
+        label: 'Word',
+      },
+      translation: {
+        name: 'translation',
+        label: 'Translation',
+      },
+      description: {
+        name: 'description',
+        label: 'Description',
+      },
+    },
+    initValue: [
+      {
+        word: 'test',
+      },
+      {
+        word: 'test2',
+        description: 'test212',
+      },
+    ],
+  });
 
-    <SliderDialog
-      isOpened={state === FormState.NEW}
-      onCloseClick={onClose}
-      // title={formName}
-      title="Dynamic form"
-      content={<DynamicForm onSubmit={() => console.log('onSubmit')} />}
-    />
+  return (
+    <>
+      {/*<DynamicFormKanji*/}
+      {/*  isOpened={state === FormState.NEW}*/}
+      {/*  onClose={onClose}*/}
+      {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
+      {/*/>*/}
+      {/*<DynamicFormHitKat*/}
+      {/*  isOpened={state === FormState.NEW}*/}
+      {/*  onClose={onClose}*/}
+      {/*  onSubmit={(e: any) => console.log('onSubmit', e)}*/}
+      {/*/>*/}
 
-    {/*<NewWordForm*/}
-    {/*  isOpened={state === FormState.NEW}*/}
-    {/*  onClose={onClose}*/}
-    {/*  vocabularyId={vocabularyId}*/}
-    {/*/>*/}
-    <EditWordForm
-      isOpened={state === FormState.EDIT}
-      onClose={onClose}
-      oldWord={(wordToEdit ?? {}) as IWord}
-    />
-  </>
-);
+      <SliderDialog
+        isOpened={state === FormState.NEW}
+        onCloseClick={onClose}
+        // title={formName}
+        title="Dynamic form"
+        // todo: metadata functions should be in useCallback or use constant (check what is better)
+        content={
+          <DynamicForm
+            onSubmit={() => console.log('onSubmit')}
+            metaData={[
+              textBoxProps.metadata,
+              textBox2Props.metadata,
+              textAreaProps.metadata,
+              comboBoxProps.metadata,
+              nInputsProps.metadata,
+            ]}
+            initValues={[
+              textBoxProps.initValue,
+              textBox2Props.initValue,
+              textAreaProps.initValue,
+              comboBoxProps.initValue,
+              nInputsProps.initValue,
+            ]}
+          />
+        }
+      />
+
+      {/*<NewWordForm*/}
+      {/*  isOpened={state === FormState.NEW}*/}
+      {/*  onClose={onClose}*/}
+      {/*  vocabularyId={vocabularyId}*/}
+      {/*/>*/}
+      <EditWordForm
+        isOpened={state === FormState.EDIT}
+        onClose={onClose}
+        oldWord={(wordToEdit ?? {}) as IWord}
+      />
+    </>
+  );
+};

@@ -7,87 +7,25 @@ import {
   InputChangeEvent,
   KeysWithStringValues,
 } from '../../../helpers/typeAbbreviations';
-import { PartsOfSpeech } from '../../../models/Vocabulary/IWord';
 import { ComboBoxField } from './components/ComboBoxField';
 import {
   InputInfos,
   InputValue,
   InputValues,
 } from './components/NInputs/props';
-import { ComboBoxItems } from '../../Inputs/ComboBox';
 import { NInputsBlock } from './components/NInputs/NInputsBlock';
+import {
+  ComboBoxMetadata,
+  MetadataType,
+  NInputsMetadata,
+  TextInputMetadata,
+} from './services/metadataTypes';
 
 type TDynamicFormProps = {
   onSubmit: () => void;
+  metaData: (TextInputMetadata | ComboBoxMetadata | NInputsMetadata)[];
+  initValues: (string | KeysWithStringValues[] | undefined)[];
 };
-
-type Metadata = {
-  type: string;
-  id: string;
-  name: string;
-  label: string;
-};
-
-type TextInputMetadata = Metadata;
-type ComboBoxMetadata = Metadata & {
-  items: ComboBoxItems;
-  defaultElement?: string;
-};
-type NInputsInfoMetadata = Metadata & {
-  items: InputInfos<KeysWithStringValues>;
-};
-
-const metaData: (TextInputMetadata | ComboBoxMetadata | NInputsInfoMetadata)[] =
-  [
-    {
-      type: 'textBox',
-      id: 'kanjiInput',
-      name: 'kanji',
-      label: 'Kanji',
-    },
-    {
-      type: 'textBox',
-      id: 'kanjiInput2',
-      name: 'kanji',
-      label: 'Kanji',
-    },
-    {
-      type: 'textArea',
-      id: 'kanjiDescription',
-      name: 'description',
-      label: 'Description',
-    },
-    {
-      type: 'comboBox',
-      id: 'partOfSpeechComboBox',
-      name: 'partOfSpeech',
-      label: 'Part Of Speech',
-      items: Object.entries(PartsOfSpeech).map(([k, v]) => ({
-        value: k,
-        label: v.charAt(0).toUpperCase() + v.slice(1),
-      })),
-    },
-    {
-      type: 'nInputs',
-      id: 'onWordsNInputs',
-      name: 'onWords',
-      label: 'On:',
-      items: {
-        word: {
-          name: 'word',
-          label: 'Word',
-        },
-        translation: {
-          name: 'translation',
-          label: 'Translation',
-        },
-        description: {
-          name: 'description',
-          label: 'Description',
-        },
-      },
-    },
-  ];
 
 type SetValue = (
   value: string,
@@ -113,7 +51,10 @@ type State = {
   setValue: SetValue | SetNInputsValue;
 };
 
-const getNewValueForNInputs = (infos: InputInfos<KeysWithStringValues>) => {
+const getOneNewValueForNInputs = (
+  infos: InputInfos,
+  initValue?: KeysWithStringValues,
+) => {
   const inputInfoKeys = Object.keys(infos);
   const names = inputInfoKeys.map((key) => infos[key].name);
   const inputsValues: InputValue<{
@@ -121,14 +62,27 @@ const getNewValueForNInputs = (infos: InputInfos<KeysWithStringValues>) => {
   }> = {
     id: nanoid(),
   };
+
   names.forEach((n) => {
-    inputsValues[n] = '';
+    inputsValues[n] = (initValue && initValue[n]) ?? '';
   });
 
   return inputsValues;
 };
 
-export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
+const getNewValueForNInputs = (
+  infos: InputInfos,
+  initValue?: KeysWithStringValues[],
+) =>
+  initValue && initValue.length
+    ? initValue.map((v) => getOneNewValueForNInputs(infos, v))
+    : [getOneNewValueForNInputs(infos)];
+
+export const DynamicForm = ({
+  onSubmit,
+  metaData,
+  initValues,
+}: TDynamicFormProps) => {
   const [state, setState] = useState<State[]>([]);
 
   const handleSubmitForm = (e: FormEvent) => {
@@ -181,7 +135,9 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
   };
 
   const handleNInputAddClicked = (id: string) => {
-    const meta = metaData.find((m) => m.id === id && m.type === 'nInputs');
+    const meta = metaData.find(
+      (m) => m.id === id && m.type === MetadataType.nInputs,
+    );
     if (!meta || !('items' in meta)) {
       return;
     }
@@ -190,11 +146,11 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
       return;
     }
 
-    const inputInfos = meta.items as InputInfos<KeysWithStringValues>;
+    const inputInfos = meta.items as InputInfos;
 
     const newInputs = cloneDeep(state[oldInputsIndex]);
     (newInputs.value as InputValues<KeysWithStringValues>).push(
-      getNewValueForNInputs(inputInfos),
+      getOneNewValueForNInputs(inputInfos),
     );
     setState(() => [
       ...state.slice(0, oldInputsIndex),
@@ -207,8 +163,8 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
     const newState: State[] = [];
     return metaData.forEach(({ type, id, ...rest }, i) => {
       switch (type) {
-        case 'textBox':
-        case 'textArea':
+        case MetadataType.textBox:
+        case MetadataType.textArea:
           {
             const setValue = (
               value: string,
@@ -227,10 +183,14 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
                 ...state.slice(i + 1),
               ]);
             };
-            newState.push({ id, value: '', setValue });
+            newState.push({
+              id,
+              value: (initValues[i] as string) ?? '',
+              setValue,
+            });
           }
           break;
-        case 'comboBox':
+        case MetadataType.comboBox:
           {
             if (!('items' in rest)) {
               return;
@@ -256,21 +216,26 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
 
             newState.push({
               id,
-              value: (rest as ComboBoxMetadata).defaultElement ?? '',
+              value:
+                (initValues[i] as string) ??
+                (rest as ComboBoxMetadata).defaultElement ??
+                '',
               setValue,
             });
           }
           break;
-        case 'nInputs':
+        case MetadataType.nInputs:
           {
             if (!('items' in rest)) {
               return;
             }
 
-            const inputInfos = rest.items as InputInfos<KeysWithStringValues>;
+            const inputInfos = rest.items as InputInfos;
 
-            const thisValue = getNewValueForNInputs(inputInfos);
-            const value = [thisValue];
+            const value = getNewValueForNInputs(
+              inputInfos,
+              initValues[i] as KeysWithStringValues[],
+            );
 
             const setValue = (
               value: string,
@@ -316,8 +281,8 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
       const { type, name, label } = meta;
 
       switch (type) {
-        case 'textBox':
-        case 'textArea': {
+        case MetadataType.textBox:
+        case MetadataType.textArea: {
           return (
             <SingleTextField
               key={id}
@@ -325,7 +290,7 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
               name={name}
               value={value as string}
               label={label}
-              multiline={type === 'textArea'}
+              multiline={type === MetadataType.textArea}
               onTextChanged={(e) =>
                 handleTextFieldChanged(e, (s) =>
                   (setValue as SetValue)(s, state, setState),
@@ -334,7 +299,7 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
             />
           );
         }
-        case 'comboBox': {
+        case MetadataType.comboBox: {
           if (!('items' in meta)) {
             return null;
           }
@@ -356,11 +321,11 @@ export const DynamicForm = ({ onSubmit }: TDynamicFormProps) => {
             />
           );
         }
-        case 'nInputs': {
+        case MetadataType.nInputs: {
           if (!('items' in meta)) {
             return null;
           }
-          const { items } = meta as NInputsInfoMetadata;
+          const { items } = meta as NInputsMetadata;
           return (
             <NInputsBlock
               key={id}
